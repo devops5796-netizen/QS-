@@ -179,7 +179,7 @@ from ads_counter import (
     count_ads_from_downloads,
 )
 
-from r2_file_counter import count_site_r2_files
+from r2_file_counter import collect_scraper_r2_sizes
 
 log = logging.getLogger("monitor")
 
@@ -693,10 +693,15 @@ def build_monitor_report(
     )
     
     try:
-        total_files = count_site_r2_files(client, bucket, r2_prefix)
-        report["total_r2_files"] = total_files
-    except Exception:
-        pass
+        scrapers_r2, total_r2_size_bytes, total_r2_daily_size, total_r2_files = (
+            collect_scraper_r2_sizes(client, bucket, r2_prefix, scrapers, dt)
+        )
+        report["scrapers"] = scrapers_r2
+        report["total_r2_size_bytes"] = total_r2_size_bytes
+        report["total_r2_daily_size"] = total_r2_daily_size
+        report["total_r2_files"] = total_r2_files
+    except Exception as exc:
+        log.warning(f"R2 size collection failed: {exc}")
     
     if save_to_r2:
         partition_date = dt.strftime("%Y-%m-%d")
@@ -756,6 +761,9 @@ def build_monitor_report_with_date_range(
     
     category_totals = defaultdict(int)
     all_categories = {}
+    scraper_r2_totals = defaultdict(lambda: {"r2_size_bytes": 0, "r2_daily_size": 0})
+    total_r2_daily_size = 0
+    latest_total_r2_size_bytes = 0
     
     for report in daily_reports:
         for cat in report.get("categories", []):
@@ -763,6 +771,19 @@ def build_monitor_report_with_date_range(
             slug = cat.get("slug", name.lower().replace(" ", "-"))
             category_totals[name] += cat.get("total_ads", 0)
             all_categories[name] = slug
+
+        for scraper_entry in report.get("scrapers", []):
+            scraper_name = scraper_entry.get("scraper")
+            if not scraper_name:
+                continue
+            scraper_r2_totals[scraper_name]["r2_daily_size"] += scraper_entry.get("r2_daily_size", 0)
+            scraper_r2_totals[scraper_name]["r2_size_bytes"] = max(
+                scraper_r2_totals[scraper_name]["r2_size_bytes"],
+                scraper_entry.get("r2_size_bytes", 0),
+            )
+
+        total_r2_daily_size += report.get("total_r2_daily_size", 0)
+        latest_total_r2_size_bytes = report.get("total_r2_size_bytes", latest_total_r2_size_bytes)
     
     categories = []
     for name, slug in all_categories.items():
@@ -773,6 +794,19 @@ def build_monitor_report_with_date_range(
         })
     
     categories = sorted(categories, key=lambda x: x["total_ads"], reverse=True)
+
+    scrapers = [
+        {
+            "scraper": name,
+            "r2_size_bytes": totals["r2_size_bytes"],
+            "r2_daily_size": totals["r2_daily_size"],
+        }
+        for name, totals in sorted(
+            scraper_r2_totals.items(),
+            key=lambda item: item[1]["r2_size_bytes"],
+            reverse=True,
+        )
+    ]
     
     return {
         "date_range": {
@@ -786,6 +820,9 @@ def build_monitor_report_with_date_range(
         "total_categories": len(categories),
         "total_ads": sum(c["total_ads"] for c in categories),
         "categories": categories,
+        "scrapers": scrapers,
+        "total_r2_size_bytes": latest_total_r2_size_bytes,
+        "total_r2_daily_size": total_r2_daily_size,
         "days_processed": len(daily_reports),
     }
 

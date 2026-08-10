@@ -1,7 +1,4 @@
 __pycache__/
 .env
 README.md
-test.py
-upload.py
-del.py
-size.py
+try.py

@@ -11,10 +11,22 @@ CF_R2_ENDPOINT_URL = os.getenv('CF_R2_ENDPOINT_URL')
 BUCKET_NAME = os.getenv('CF_R2_BUCKET_NAME', '')
 
 
-FOLDER = os.getenv("FOLDER", "DOMAN")
+FOLDER = os.getenv("FOLDER", "DKSA/year=2026/month=08/day=09/business-industrial")
 if not FOLDER.endswith('/'):
     FOLDER += '/'
-
+"""
+📁 ''  → subfolders: ['excel', 'images', 'json']
+   📁 'electronics-home-appliances'  → subfolders: ['excel', 'images', 'json']
+   📁 'fashion-beauty'  → subfolders: ['excel', 'images', 'json']
+   📁 'hobbies-music-art-books'  → subfolders: ['excel', 'images', 'json']
+   📁 'home-garden'  → subfolders: ['excel', 'images', 'json']
+   📁 'jobs-services'  → subfolders: ['excel', 'json']
+   📁 'kids-babies'  → subfolders: ['excel', 'images', 'json']
+   📁 'mobile-phones-accessories'  → subfolders: ['excel', 'images', 'json']
+   📁 'pets'  → subfolders: ['excel', 'images', 'json']
+   📁 'sporting-goods-bikes'  → subfolders: ['excel', 'images', 'json']
+   📁 'vehicles'  → subfolders: ['car-accessories', 'cars-for-rent', 'cars-for-sale', 'motorcycles', 'trucks', 'vip-car-plates']
+   """
 client = boto3.client(
     's3',
     endpoint_url=CF_R2_ENDPOINT_URL,

@@ -11,11 +11,11 @@ CF_R2_ENDPOINT_URL = os.getenv('CF_R2_ENDPOINT_URL')
 BUCKET_NAME = os.getenv('CF_R2_BUCKET_NAME', '')
 
 
-FOLDER = os.getenv("FOLDER", "DKSA/year=2026/month=08/day=09/fashion-beauty")
+FOLDER = os.getenv("FOLDER", "DKSA/year=2026/month=08/day=09/hobbies-music-art-books")
 if not FOLDER.endswith('/'):
     FOLDER += '/'
 """
-   📁 'hobbies-music-art-books'  → subfolders: ['excel', 'images', 'json']
+   📁 ''  → subfolders: ['excel', 'images', 'json']
    📁 'home-garden'  → subfolders: ['excel', 'images', 'json']
    📁 'jobs-services'  → subfolders: ['excel', 'json']
    📁 'kids-babies'  → subfolders: ['excel', 'images', 'json']

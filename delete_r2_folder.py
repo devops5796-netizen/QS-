@@ -11,12 +11,10 @@ CF_R2_ENDPOINT_URL = os.getenv('CF_R2_ENDPOINT_URL')
 BUCKET_NAME = os.getenv('CF_R2_BUCKET_NAME', '')
 
 
-FOLDER = os.getenv("FOLDER", "DKSA/year=2026/month=08/day=09/sporting-goods-bikes")
+FOLDER = os.getenv("FOLDER", "DKSA/year=2026/month=08/day=09/vehicles")
 if not FOLDER.endswith('/'):
     FOLDER += '/'
-"""
-   📁 'vehicles'  → subfolders: ['car-accessories', 'cars-for-rent', 'cars-for-sale', 'motorcycles', 'trucks', 'vip-car-plates']
-   """
+    
 client = boto3.client(
     's3',
     endpoint_url=CF_R2_ENDPOINT_URL,

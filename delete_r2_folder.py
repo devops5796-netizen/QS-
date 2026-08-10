@@ -26,7 +26,9 @@ client = boto3.client(
 # ==========================================
 
 keys = []
-
+print("Endpoint:", CF_R2_ENDPOINT_URL)
+print("Bucket:", BUCKET_NAME)
+print("Access Key:", CF_R2_ACCESS_KEY[:6] if CF_R2_ACCESS_KEY else None)
 paginator = client.get_paginator("list_objects_v2")
 
 for page in paginator.paginate(

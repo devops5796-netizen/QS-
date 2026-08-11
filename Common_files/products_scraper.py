@@ -62,7 +62,7 @@ def download_images(images: list, product_url: str = "", category: str = "", fmt
 
     ext = "webp"
 
-    yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+    today = datetime.now(timezone.utc)
 
     slug = product_url.rstrip("/").split("/")[-1] if product_url else "unknown"
 
@@ -93,7 +93,7 @@ def download_images(images: list, product_url: str = "", category: str = "", fmt
                     category=category,
                     file_type="images",
                     content_type="image/webp",
-                    dt = yesterday
+                    dt = today
                 )
 
                 if r2_key:

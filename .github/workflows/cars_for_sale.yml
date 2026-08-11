@@ -194,7 +194,7 @@ jobs:
                   print("⚠️ Warning: Could not parse WORKFLOW_START_TIME")
 
           # Data date = yesterday
-          data_date = datetime.now(timezone.utc) - timedelta(days=1)
+          data_date = datetime.now(timezone.utc)
           dt = datetime.now(timezone.utc)
 
           files = glob.glob('csv_parts/*.csv')
@@ -278,7 +278,7 @@ jobs:
           # Complete summary with all metrics
           summary = {
               "scraped_at": dt.isoformat(),
-              "data_scraped_date": data_date.strftime("%Y-%m-%d"),
+              "data_scraped_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
               "saved_to_R2_date": data_date.strftime("%Y-%m-%d"),
               "category": {
                   "name_ar": "سيارات للبيع",
@@ -353,7 +353,7 @@ jobs:
           )
           
           # Use data date (yesterday) for path
-          data_date = datetime.now(timezone.utc) - timedelta(days=1)
+          data_date = datetime.now(timezone.utc)
           prefix = f"qatarsale/year={data_date.year}/month={data_date.strftime('%m')}/day={data_date.strftime('%d')}/cars_for_sale/excel"
           bucket = os.environ['CF_R2_BUCKET_NAME']
 

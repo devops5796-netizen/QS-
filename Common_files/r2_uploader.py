@@ -112,7 +112,7 @@ def upload_final_batch_assets(images_folder: str, final_excel: str, folder_name:
 
     uploaded = 0
     failed = 0
-    dt = datetime.now(timezone.utc) - timedelta(days=1)
+    dt = datetime.now(timezone.utc)
 
     if os.path.exists(final_excel):
         print(f"Found final Excel file '{final_excel}', starting upload...")

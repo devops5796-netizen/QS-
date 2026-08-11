@@ -99,7 +99,7 @@ def parse_user_details(uri_code: str) -> dict:
 def download_and_upload_image(img_url: str, user_uri: str) -> str:
     if not img_url:
         return ""
-    yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+    today = datetime.now(timezone.utc)
     try:
         r = req.get(img_url, timeout=15)
         if r.status_code == 200:
@@ -119,7 +119,7 @@ def download_and_upload_image(img_url: str, user_uri: str) -> str:
                 category="users",
                 file_type="images",
                 content_type="image/webp",
-                dt = yesterday
+                dt = today
             )
             return r2_key or ""
         return ""

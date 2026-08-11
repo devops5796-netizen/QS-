@@ -12,7 +12,6 @@ BUCKET_NAME = os.getenv("CF_R2_BUCKET_NAME")
 
 FOLDER = "DKSA/year=2026/month=08/day=07/"
 FOLDER = "DKSA/year=2026/month=08/day=06/"
-FOLDER = "DKSA/year=2026/month=08/day=05/"
 
 
 client = boto3.client(

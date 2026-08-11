@@ -1,10 +1,8 @@
 name: Sub Categories
 
 on:
-  workflow_run:
-    workflows: ["Simple Categories"]
-    types:
-      - completed
+  schedule:
+    - cron: '0 1 * * *'
   workflow_dispatch:
 
 jobs:

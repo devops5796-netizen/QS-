@@ -1,6 +1,10 @@
 name: QS Monitor
 
 on:
+  workflow_run:
+    workflows: ["Showrooms"]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:

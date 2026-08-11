@@ -10,14 +10,10 @@ CF_R2_SECRET_KEY = os.getenv("CF_R2_SECRET_ACCESS_KEY")
 CF_R2_ENDPOINT_URL = os.getenv("CF_R2_ENDPOINT_URL")
 BUCKET_NAME = os.getenv("CF_R2_BUCKET_NAME")
 
-FOLDER = "DKSA/year=2026/month=08/day=08/"
 FOLDER = "DKSA/year=2026/month=08/day=07/"
 FOLDER = "DKSA/year=2026/month=08/day=06/"
 FOLDER = "DKSA/year=2026/month=08/day=05/"
 FOLDER = "DKSA/year=2026/month=08/day=04/"
-FOLDER = "DKSA/year=2026/month=08/day=03/"
-
-
 
 
 client = boto3.client(
@@ -34,9 +30,7 @@ client = boto3.client(
 # ==========================================
 
 keys = []
-print("Endpoint:", CF_R2_ENDPOINT_URL)
-print("Bucket:", BUCKET_NAME)
-print("Access Key:", CF_R2_ACCESS_KEY[:6] if CF_R2_ACCESS_KEY else None)
+
 paginator = client.get_paginator("list_objects_v2")
 
 for page in paginator.paginate(

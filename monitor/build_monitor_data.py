@@ -9,7 +9,7 @@ COMPLETE USAGE GUIDE FOR build_monitor_data.py
 
 COMMAND REFERENCE
 ────────────────────────────────────────────────────────────────────────────────
---prefix DKSA              Required - specifies the site/R2 prefix
+--prefix DOMAN              Required - specifies the site/R2 prefix
 --upload-config            Upload local websites-config.yml to R2
 --show-config              Display local config file content
 --build-stats              Build monitor_stats.yml from Excel files
@@ -27,96 +27,96 @@ COMMAND REFERENCE
 # =====================================================================
 
 # 1. UPLOAD CONFIG TO R2
-# Uploads local websites-config.yml to R2 at DKSA/monitor/websites-config.yml
-python build_monitor_data.py --prefix DKSA --upload-config
+# Uploads local websites-config.yml to R2 at DOMAN/monitor/websites-config.yml
+python build_monitor_data.py --prefix DOMAN --upload-config
 
 # 2. SHOW LOCAL CONFIG
 # Prints the content of local websites-config.yml file
-python build_monitor_data.py --prefix DKSA --show-config
+python build_monitor_data.py --prefix DOMAN --show-config
 
 # 3. BUILD STATS (LAST 30 DAYS)
 # Scans last 30 days of Excel files, builds monitor_stats.yml, uploads to R2
-python build_monitor_data.py --prefix DKSA --build-stats
+python build_monitor_data.py --prefix DOMAN --build-stats
 
 # 4. BUILD STATS (CUSTOM DAYS)
 # Scans only last 7 days (faster)
-python build_monitor_data.py --prefix DKSA --build-stats --days 7
+python build_monitor_data.py --prefix DOMAN --build-stats --days 7
 
 # 5. BUILD STATS (LOCAL ONLY)
 # Builds stats but saves locally as test_stats.yml (no R2 upload)
-python build_monitor_data.py --prefix DKSA --build-stats --days 7 --output-stats test_stats.yml
+python build_monitor_data.py --prefix DOMAN --build-stats --days 7 --output-stats test_stats.yml
 
 # 6. BUILD STATS (TEST MODE)
 # Builds stats but doesn't upload to R2 (safe for testing)
-python build_monitor_data.py --prefix DKSA --build-stats --days 7 --no-save
+python build_monitor_data.py --prefix DOMAN --build-stats --days 7 --no-save
 
 # 7. GENERATE DAILY REPORT (YESTERDAY)
-# Generates report for yesterday, saves to R2 at DKSA/monitor/YYYY-MM-DD/report.json
-python build_monitor_data.py --prefix DKSA --report-date
+# Generates report for yesterday, saves to R2 at DOMAN/monitor/YYYY-MM-DD/report.json
+python build_monitor_data.py --prefix DOMAN --report-date
 
 # 8. GENERATE DAILY REPORT (SPECIFIC DATE)
 # Generates report for July 28, 2026
-python build_monitor_data.py --prefix DKSA --report-date 2026-07-28
+python build_monitor_data.py --prefix DOMAN --report-date 2026-07-28
 
 # 9. GENERATE REPORT (LOCAL ONLY)
 # Generates report and saves locally as my_report.json
-python build_monitor_data.py --prefix DKSA --report-date 2026-07-28 --output-report my_report.json
+python build_monitor_data.py --prefix DOMAN --report-date 2026-07-28 --output-report my_report.json
 
 # 10. GENERATE WEEKLY REPORT
 # Aggregates reports from July 22 to July 28 into one report
-python build_monitor_data.py --prefix DKSA --range-report --start 2026-07-22 --end 2026-07-28
+python build_monitor_data.py --prefix DOMAN --range-report --start 2026-07-22 --end 2026-07-28
 
 # 11. GENERATE MONTHLY REPORT
 # Aggregates reports from July 1 to July 28
-python build_monitor_data.py --prefix DKSA --range-report --start 2026-07-01 --end 2026-07-28
+python build_monitor_data.py --prefix DOMAN --range-report --start 2026-07-01 --end 2026-07-28
 
 # 12. GENERATE RANGE REPORT (LOCAL ONLY)
 # Range report saved locally as monthly.json
-python build_monitor_data.py --prefix DKSA --range-report --start 2026-07-01 --end 2026-07-28 --output-report monthly.json
+python build_monitor_data.py --prefix DOMAN --range-report --start 2026-07-01 --end 2026-07-28 --output-report monthly.json
 
 # 13. FULL RUN (STATS + REPORT)
 # Builds stats for 30 days AND generates report for July 28
-python build_monitor_data.py --prefix DKSA --build-stats --days 30 --report-date 2026-07-28
+python build_monitor_data.py --prefix DOMAN --build-stats --days 30 --report-date 2026-07-28
 
 # 14. FULL RUN (EVERYTHING LOCAL)
 # Builds stats, generates report, saves everything locally
-python build_monitor_data.py --prefix DKSA --build-stats --days 30 --output-stats stats.yml --report-date 2026-07-28 --output-report report.json
+python build_monitor_data.py --prefix DOMAN --build-stats --days 30 --output-stats stats.yml --report-date 2026-07-28 --output-report report.json
 
 # 15. DAILY AUTOMATION (GITHUB ACTIONS)
 # Three commands: upload config, update stats, generate report
-python build_monitor_data.py --prefix DKSA --upload-config
-python build_monitor_data.py --prefix DKSA --build-stats --days 1
-python build_monitor_data.py --prefix DKSA --report-date
+python build_monitor_data.py --prefix DOMAN --upload-config
+python build_monitor_data.py --prefix DOMAN --build-stats --days 1
+python build_monitor_data.py --prefix DOMAN --report-date
 
 # 16. FIRST TIME SETUP
 # Complete setup for a new site
-python build_monitor_data.py --prefix DKSA --upload-config
-python build_monitor_data.py --prefix DKSA --build-stats --days 30
-python build_monitor_data.py --prefix DKSA --report-date
+python build_monitor_data.py --prefix DOMAN --upload-config
+python build_monitor_data.py --prefix DOMAN --build-stats --days 30
+python build_monitor_data.py --prefix DOMAN --report-date
 
 # 17. CONFIG UPDATE
 # After editing websites-config.yml locally
-python build_monitor_data.py --prefix DKSA --upload-config
-python build_monitor_data.py --prefix DKSA --build-stats --days 30
+python build_monitor_data.py --prefix DOMAN --upload-config
+python build_monitor_data.py --prefix DOMAN --build-stats --days 30
 
 # 18. TEST NEW CONFIG (SAFE)
 # Tests stats without affecting production R2 data
-python build_monitor_data.py --prefix DKSA --build-stats --days 1 --no-save --output-stats test_stats.yml
+python build_monitor_data.py --prefix DOMAN --build-stats --days 1 --no-save --output-stats test_stats.yml
 
 # 19. WEEKLY DEEP SCAN
 # Full weekly scan for trend detection
-python build_monitor_data.py --prefix DKSA --build-stats --days 7
+python build_monitor_data.py --prefix DOMAN --build-stats --days 7
 
 # 20. MONTHLY MAINTENANCE
 # Full rebuild to catch any data gaps
-python build_monitor_data.py --prefix DKSA --build-stats --days 30
+python build_monitor_data.py --prefix DOMAN --build-stats --days 30
 
 # =====================================================================
 # FILE LOCATIONS IN R2
 # =====================================================================
-# Config:   DKSA/monitor/websites-config.yml
-# Stats:    DKSA/monitor/monitor_stats.yml
-# Report:   DKSA/monitor/YYYY-MM-DD/report.json
+# Config:   DOMAN/monitor/websites-config.yml
+# Stats:    DOMAN/monitor/monitor_stats.yml
+# Report:   DOMAN/monitor/YYYY-MM-DD/report.json
 
 # =====================================================================
 # COMMON ERRORS & SOLUTIONS
@@ -179,7 +179,7 @@ from ads_counter import (
     count_ads_from_downloads,
 )
 
-from r2_file_counter import collect_scraper_r2_sizes
+from r2_file_counter import count_site_r2_files
 
 log = logging.getLogger("monitor")
 
@@ -285,7 +285,11 @@ def get_stats_for_scraper(
         log.warning(f"  {scraper_name}: no r2_path in config — skipping")
         return {}
     
-    stats = {}
+    stats = existing_stats.get(scraper_name, {
+        "observed_dates": [],
+        "file_size_kb": {"min": None, "max": None, "last": None},
+        "sheets": {},
+    }).copy()
     
     for date_str in dates_to_check:
         excel_files = list_scraper_excel_files(client, bucket, r2_base, category, date_str)
@@ -301,19 +305,17 @@ def get_stats_for_scraper(
             inspected = inspect_excel(raw, xlsx_meta["key"])
             inspected["size_bytes"] = xlsx_meta["size_bytes"]
             
+            wrapper = {scraper_name: stats}
             accumulate_stats(
-                stats,
+                wrapper,
                 scraper_name,
                 inspected,
                 xlsx_meta["size_bytes"],
                 date_str
             )
+            stats = wrapper[scraper_name]
     
-    if scraper_name in existing_stats:
-        return merge_stats(existing_stats[scraper_name], stats)
-    else:
-        return stats
-
+    return stats
 
 def get_categories_ads(
     client,
@@ -601,27 +603,24 @@ def build_monitor_stats(
     log.info(f"Processing {len(scrapers)} scrapers over {days_lookback} days...")
     
     stats = dict(existing_stats)
-    
+
     for scraper_config in scrapers:
-        scraper_name = scraper_config.get("name")
-        if not scraper_name:
-            continue
-        
-        log.info(f"Processing {scraper_name}...")
-        
-        scraper_stats = get_stats_for_scraper(
-            client,
-            bucket,
-            scraper_name,
-            scraper_config,
-            dates_to_check,
-            existing_stats
-        )
-        
-        if scraper_stats:
-            if scraper_name in stats:
-                stats[scraper_name] = merge_stats(stats[scraper_name], scraper_stats)
-            else:
+            scraper_name = scraper_config.get("name")
+            if not scraper_name:
+                continue
+            
+            log.info(f"Processing {scraper_name}...")
+            
+            scraper_stats = get_stats_for_scraper(
+                client,
+                bucket,
+                scraper_name,
+                scraper_config,
+                dates_to_check,
+                existing_stats
+            )
+            
+            if scraper_stats:
                 stats[scraper_name] = scraper_stats
     
     # Save stats using monitor_r2
@@ -693,15 +692,10 @@ def build_monitor_report(
     )
     
     try:
-        scrapers_r2, total_r2_size_bytes, total_r2_daily_size, total_r2_files = (
-            collect_scraper_r2_sizes(client, bucket, r2_prefix, scrapers, dt)
-        )
-        report["scrapers"] = scrapers_r2
-        report["total_r2_size_bytes"] = total_r2_size_bytes
-        report["total_r2_daily_size"] = total_r2_daily_size
-        report["total_r2_files"] = total_r2_files
-    except Exception as exc:
-        log.warning(f"R2 size collection failed: {exc}")
+        total_files = count_site_r2_files(client, bucket, r2_prefix)
+        report["total_r2_files"] = total_files
+    except Exception:
+        pass
     
     if save_to_r2:
         partition_date = dt.strftime("%Y-%m-%d")
@@ -761,9 +755,6 @@ def build_monitor_report_with_date_range(
     
     category_totals = defaultdict(int)
     all_categories = {}
-    scraper_r2_totals = defaultdict(lambda: {"r2_size_bytes": 0, "r2_daily_size": 0})
-    total_r2_daily_size = 0
-    latest_total_r2_size_bytes = 0
     
     for report in daily_reports:
         for cat in report.get("categories", []):
@@ -771,19 +762,6 @@ def build_monitor_report_with_date_range(
             slug = cat.get("slug", name.lower().replace(" ", "-"))
             category_totals[name] += cat.get("total_ads", 0)
             all_categories[name] = slug
-
-        for scraper_entry in report.get("scrapers", []):
-            scraper_name = scraper_entry.get("scraper")
-            if not scraper_name:
-                continue
-            scraper_r2_totals[scraper_name]["r2_daily_size"] += scraper_entry.get("r2_daily_size", 0)
-            scraper_r2_totals[scraper_name]["r2_size_bytes"] = max(
-                scraper_r2_totals[scraper_name]["r2_size_bytes"],
-                scraper_entry.get("r2_size_bytes", 0),
-            )
-
-        total_r2_daily_size += report.get("total_r2_daily_size", 0)
-        latest_total_r2_size_bytes = report.get("total_r2_size_bytes", latest_total_r2_size_bytes)
     
     categories = []
     for name, slug in all_categories.items():
@@ -794,19 +772,6 @@ def build_monitor_report_with_date_range(
         })
     
     categories = sorted(categories, key=lambda x: x["total_ads"], reverse=True)
-
-    scrapers = [
-        {
-            "scraper": name,
-            "r2_size_bytes": totals["r2_size_bytes"],
-            "r2_daily_size": totals["r2_daily_size"],
-        }
-        for name, totals in sorted(
-            scraper_r2_totals.items(),
-            key=lambda item: item[1]["r2_size_bytes"],
-            reverse=True,
-        )
-    ]
     
     return {
         "date_range": {
@@ -820,9 +785,6 @@ def build_monitor_report_with_date_range(
         "total_categories": len(categories),
         "total_ads": sum(c["total_ads"] for c in categories),
         "categories": categories,
-        "scrapers": scrapers,
-        "total_r2_size_bytes": latest_total_r2_size_bytes,
-        "total_r2_daily_size": total_r2_daily_size,
         "days_processed": len(daily_reports),
     }
 
@@ -838,19 +800,19 @@ def main():
         epilog="""
 Examples:
   # Upload local config to R2
-  python build_monitor_data.py --prefix DKSA --upload-config
+  python build_monitor_data.py --prefix DOMAN --upload-config
 
   # Show local config
-  python build_monitor_data.py --prefix DKSA --show-config
+  python build_monitor_data.py --prefix DOMAN --show-config
 
   # Build stats (uses local config)
-  python build_monitor_data.py --prefix DKSA --build-stats --days 30
+  python build_monitor_data.py --prefix DOMAN --build-stats --days 30
 
   # Build report (uses local config)
-  python build_monitor_data.py --prefix DKSA --report-date 2026-07-28
+  python build_monitor_data.py --prefix DOMAN --report-date 2026-07-28
 
   # All in one
-  python build_monitor_data.py --prefix DKSA --build-stats --report-date 2026-07-28
+  python build_monitor_data.py --prefix DOMAN --build-stats --report-date 2026-07-28
         """
     )
     

@@ -44,7 +44,7 @@ def download_images(images: list, product_url: str = "", category: str = "", fmt
 
                 output_buffer.seek(0)
 
-                yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+                today = datetime.now(timezone.utc)
 
                 r2_key = upload_buffer(
                     output_buffer,
@@ -52,7 +52,7 @@ def download_images(images: list, product_url: str = "", category: str = "", fmt
                     category=category,
                     file_type="images",
                     content_type="image/webp",
-                    dt=yesterday
+                    dt=today
                 )
 
                 if r2_key:

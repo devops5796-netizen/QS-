@@ -11,7 +11,6 @@ CF_R2_ENDPOINT_URL = os.getenv("CF_R2_ENDPOINT_URL")
 BUCKET_NAME = os.getenv("CF_R2_BUCKET_NAME")
 
 FOLDER = "DKSA/year=2026/month=08/day=07/"
-FOLDER = "DKSA/year=2026/month=08/day=06/"
 
 
 client = boto3.client(

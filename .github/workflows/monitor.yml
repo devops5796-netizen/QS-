@@ -86,7 +86,7 @@ jobs:
           CF_R2_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
           CF_R2_ENDPOINT_URL: ${{ secrets.CF_R2_ENDPOINT_URL }}
           CF_R2_BUCKET_NAME: ${{ secrets.CF_R2_BUCKET_NAME }}
-        run: python monitor/build_monitor_data.py --prefix qatarsale --build-stats --days 3
+        run: python monitor/build_monitor_data.py --prefix qatarsale --build-stats --days 1
 
       - name: Upload report.json
         env:

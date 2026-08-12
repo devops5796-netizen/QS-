@@ -58,7 +58,7 @@ def _json_prefixes_for_date(base: str, category: Optional[str], dt: datetime) ->
     scraper's own category folder.
 
     Actual structure:
-    DKSA/year=2026/month=08/day=02/Vehicles/summary/summary.json
+    qatarsale/year=2026/month=08/day=02/Vehicles/summary/summary.json
     """
     base = base.strip("/")
     date_part = f"year={dt.year}/month={dt.month:02d}/day={dt.day:02d}"

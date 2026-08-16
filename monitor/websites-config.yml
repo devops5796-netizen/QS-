@@ -2758,7 +2758,7 @@ excel_schema:
     sheets:
       - name: "{car_type}"
         required_columns: *col_sale_cars_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: jobs
@@ -2766,7 +2766,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_job_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: users
@@ -2774,7 +2774,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_user_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: cars_for_rent
@@ -2782,7 +2782,7 @@ excel_schema:
     sheets:
       - name: "{car_type}"
         required_columns: *col_rent_cars_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: bikes
@@ -2790,7 +2790,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_bikes_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: caravan
@@ -2798,7 +2798,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_services_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: gift_items
@@ -2806,7 +2806,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: escalator
@@ -2814,7 +2814,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_escalator_tracking_sys_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: air_beds_sleeping_bags
@@ -2822,7 +2822,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_2_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: cashier_machines
@@ -2830,7 +2830,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_cashier_generators_shaving_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: elevators
@@ -2838,7 +2838,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_elevators_building_materials_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: generators
@@ -2846,7 +2846,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_cashier_generators_shaving_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: building_materials
@@ -2854,7 +2854,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_elevators_building_materials_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: shaving_hair_removal_products
@@ -2862,7 +2862,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_cashier_generators_shaving_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: metal_detector
@@ -2870,7 +2870,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
 
@@ -2879,7 +2879,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_aquariums_bikes_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: business_industrial
@@ -2887,7 +2887,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_business_industrial_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: pumps
@@ -2895,7 +2895,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_2_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: walkie_talkie
@@ -2903,7 +2903,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_2_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: glasses
@@ -2911,7 +2911,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_glasses_shoes_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: safe_boxes
@@ -2919,7 +2919,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: tracking_systems
@@ -2927,7 +2927,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_escalator_tracking_sys_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: pet_accessories
@@ -2935,7 +2935,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_pet_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: stamps
@@ -2943,7 +2943,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_2_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: inflatable_games
@@ -2951,7 +2951,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_inflatable_games_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: porta_cabin
@@ -2959,7 +2959,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_porta_cabin_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: fishing_equipment
@@ -2967,7 +2967,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_fishing_equipment_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: car_spare_parts_accessories-automotive_exterior_accessories
@@ -2975,7 +2975,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_jewellery_car_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: heavy_equipments
@@ -2983,7 +2983,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_heavy_equipments_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: car_spare_parts_accessories
@@ -2991,7 +2991,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_jewellery_car_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: jewellery
@@ -2999,7 +2999,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_jewellery_car_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: property
@@ -3007,7 +3007,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_property_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: watercrafts
@@ -3015,7 +3015,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_tools_watercrafts_listings
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: computers_and_parts
@@ -3023,7 +3023,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
   
   - scraper: video_games
@@ -3031,7 +3031,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: wrist_watches
@@ -3039,7 +3039,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
  
   - scraper: home_security_surveillance_systems
@@ -3047,7 +3047,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: health_beauty
@@ -3055,7 +3055,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: toys_games
@@ -3063,7 +3063,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_toys_games_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: kids
@@ -3071,7 +3071,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_home_appliances_kids_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: shoes_bags
@@ -3079,7 +3079,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_glasses_shoes_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: arts_crafts_sewing
@@ -3087,7 +3087,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_2_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: kitchen_dining_room
@@ -3095,7 +3095,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_services_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: education
@@ -3103,7 +3103,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_education_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: bikes_accessories
@@ -3111,7 +3111,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_aquariums_bikes_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: clothes
@@ -3119,7 +3119,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: camping
@@ -3127,7 +3127,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_services_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: tools_home_improvement
@@ -3135,7 +3135,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_tools_watercrafts_listings
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: men_accessories
@@ -3143,7 +3143,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_men_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: musical_instruments
@@ -3151,7 +3151,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: travel_accessories
@@ -3159,7 +3159,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_travel_accessories_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: special_numbers
@@ -3167,7 +3167,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_special_numbers_furniture_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: home_appliances
@@ -3175,7 +3175,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_home_appliances_kids_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: services
@@ -3183,7 +3183,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_services_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: mobile_telephone_and_tablets
@@ -3191,7 +3191,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_mobile_tablets_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: furniture_dcor
@@ -3199,7 +3199,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_special_numbers_furniture_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: electronics
@@ -3207,7 +3207,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_default_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: sportswear_equipment
@@ -3215,7 +3215,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_sportswear_equipment_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: showrooms_cars_for_sale
@@ -3223,7 +3223,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_showrooms_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
   - scraper: showrooms_cars_for_rent
@@ -3231,7 +3231,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_showrooms_listing
-        row_count_range: [1, 1]
+        row_count_range: [1, 100]
     min_file_size_kb: 5
 
 

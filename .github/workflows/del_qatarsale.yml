@@ -27,6 +27,6 @@ jobs:
           CF_R2_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
           CF_R2_ENDPOINT_URL: ${{ secrets.CF_R2_ENDPOINT_URL }}
           CF_R2_BUCKET_NAME: ${{ secrets.CF_R2_BUCKET_NAME }}
-          FOLDER: "DUAE/year=2026/month=08/day=16/motors/"
+          FOLDER: "DUAE/year=2026/month=08/day=17/Motors/"
         run: python delete_r2_folder.py
    

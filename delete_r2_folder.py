@@ -12,7 +12,6 @@ BUCKET_NAME = os.getenv("CF_R2_BUCKET_NAME")
 
 FOLDER = "qatarsale/year=2026/month=08/day=13/showrooms_cars_for_rent/"
 FOLDER = "qatarsale/year=2026/month=08/day=15/showrooms_cars_for_rent/"
-FOLDER = "qatarsale/year=2026/month=08/day=17/showrooms_cars_for_rent/"
 
 
 client = boto3.client(

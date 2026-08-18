@@ -486,6 +486,7 @@ _col_default_listing: &col_default_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_default_2_listing: &col_default_2_listing
   - advertisedFor
@@ -562,6 +563,7 @@ _col_default_2_listing: &col_default_2_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_sale_cars_listing: &col_sale_cars_listing
   - id
@@ -639,6 +641,7 @@ _col_sale_cars_listing: &col_sale_cars_listing
   - images_local_paths
   - location
   - pdfUrl
+  - specs_*
 
 _col_user_listing: &col_user_listing
   - id
@@ -681,6 +684,7 @@ _col_user_listing: &col_user_listing
   - uriCode
   - hasActiveVersion
   - profile_url
+  - specs_*
 
 _col_job_listing: &col_job_listing
   - id
@@ -726,6 +730,7 @@ _col_job_listing: &col_job_listing
   - job_url
   - rejectionReason
   - salaryAmount
+  - specs_*
 
 _col_rent_cars_listing: &col_rent_cars_listing
   - advertisedFor
@@ -778,11 +783,8 @@ _col_rent_cars_listing: &col_rent_cars_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
-  - location
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -805,9 +807,10 @@ _col_rent_cars_listing: &col_rent_cars_listing
   - title
   - type
   - uri
-  - userCode
   - viewCount
   - whatsapps
+  - images_local_paths
+  - specs_*
 
 _col_bikes_listing: &col_bikes_listing
   - advertisedFor
@@ -890,6 +893,7 @@ _col_bikes_listing: &col_bikes_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_cashier_generators_shaving_listing: &col_cashier_generators_shaving_listing
   - advertisedFor
@@ -965,6 +969,7 @@ _col_cashier_generators_shaving_listing: &col_cashier_generators_shaving_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_home_appliances_kids_listing: &col_home_appliances_kids_listing
   - advertisedFor
@@ -1047,6 +1052,7 @@ _col_home_appliances_kids_listing: &col_home_appliances_kids_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_escalator_tracking_sys_listing: &col_escalator_tracking_sys_listing
   - advertisedFor
@@ -1124,6 +1130,7 @@ _col_escalator_tracking_sys_listing: &col_escalator_tracking_sys_listing
   - uri
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_services_listing: &col_services_listing
   - advertisedFor
@@ -1210,6 +1217,7 @@ _col_services_listing: &col_services_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_elevators_building_materials_listing: &col_elevators_building_materials_listing
   - advertisedFor
@@ -1293,6 +1301,7 @@ _col_elevators_building_materials_listing: &col_elevators_building_materials_lis
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_aquariums_bikes_accessories_listing: &col_aquariums_bikes_accessories_listing
   - advertisedFor
@@ -1371,6 +1380,7 @@ _col_aquariums_bikes_accessories_listing: &col_aquariums_bikes_accessories_listi
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_jewellery_car_accessories_listing: &col_jewellery_car_accessories_listing
   - advertisedFor
@@ -1453,6 +1463,7 @@ _col_jewellery_car_accessories_listing: &col_jewellery_car_accessories_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_special_numbers_furniture_listing: &col_special_numbers_furniture_listing
   - advertisedFor
@@ -1534,6 +1545,7 @@ _col_special_numbers_furniture_listing: &col_special_numbers_furniture_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_tools_watercrafts_listings: &col_tools_watercrafts_listings
   - advertisedFor
@@ -1617,6 +1629,7 @@ _col_tools_watercrafts_listings: &col_tools_watercrafts_listings
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_glasses_shoes_listing: &col_glasses_shoes_listing
   - advertisedFor
@@ -1698,6 +1711,7 @@ _col_glasses_shoes_listing: &col_glasses_shoes_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - advertisedFor
@@ -1778,6 +1792,7 @@ _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_pet_accessories_listing: &col_pet_accessories_listing
   - advertisedFor
@@ -1855,6 +1870,7 @@ _col_pet_accessories_listing: &col_pet_accessories_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_heavy_equipments_listing: &col_heavy_equipments_listing
   - advertisedFor
@@ -1941,6 +1957,7 @@ _col_heavy_equipments_listing: &col_heavy_equipments_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_property_listing: &col_property_listing
   - advertisedFor
@@ -2023,6 +2040,7 @@ _col_property_listing: &col_property_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
    
 _col_mobile_tablets_listing: &col_mobile_tablets_listing
   - advertisedFor
@@ -2105,6 +2123,7 @@ _col_mobile_tablets_listing: &col_mobile_tablets_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_fishing_equipment_listing: &col_fishing_equipment_listing
   - advertisedFor
@@ -2182,6 +2201,7 @@ _col_fishing_equipment_listing: &col_fishing_equipment_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_toys_games_listing: &col_toys_games_listing
   - advertisedFor
@@ -2267,6 +2287,7 @@ _col_toys_games_listing: &col_toys_games_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_education_listing: &col_education_listing
   - advertisedFor
@@ -2345,6 +2366,7 @@ _col_education_listing: &col_education_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_men_accessories_listing: &col_men_accessories_listing
   - advertisedFor
@@ -2421,6 +2443,7 @@ _col_men_accessories_listing: &col_men_accessories_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_travel_accessories_listing: &col_travel_accessories_listing
   - advertisedFor
@@ -2496,6 +2519,7 @@ _col_travel_accessories_listing: &col_travel_accessories_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_business_industrial_listing: &col_business_industrial_listing
   - advertisedFor
@@ -2574,6 +2598,7 @@ _col_business_industrial_listing: &col_business_industrial_listing
   - uri
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_inflatable_games_listing: &col_inflatable_games_listing
   - advertisedFor
@@ -2653,6 +2678,7 @@ _col_inflatable_games_listing: &col_inflatable_games_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_porta_cabin_listing: &col_porta_cabin_listing
   - advertisedFor
@@ -2729,6 +2755,7 @@ _col_porta_cabin_listing: &col_porta_cabin_listing
   - userCode
   - viewCount
   - whatsapps
+  - specs_*
 
 _col_showrooms_listing: &col_showrooms_listing
   - id

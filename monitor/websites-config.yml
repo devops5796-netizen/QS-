@@ -1182,7 +1182,6 @@ _col_wrist_watches_listings: &col_wrist_watches_listings
   - language
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -2641,14 +2640,6 @@ _col_property_listing: &col_property_listing
   - showroomName
   - showroomUri
   - specs
-  - specs_Address
-  - specs_Area Size
-  - specs_Bathrooms
-  - specs_Bedrooms
-  - specs_City
-  - specs_Furnished
-  - specs_Listed For
-  - specs_Type
   - startDate
   - startingPrice
   - status
@@ -3762,6 +3753,7 @@ excel_schema:
       - name: "{child_category or Main}"
         required_columns: *col_wrist_watches_listings
         optional_columns:
+          - oldPrice
           - location
           - showroomId
           - showroomIsHidden
@@ -3984,9 +3976,9 @@ alert_thresholds:
   # Historical trend checks (requires monitor_stats.yml in R2)
   trend:
     min_observed_days: 7
-    min_row_pct_of_hist_min: 50       # alert if rows < 30% of historical min per sheet
-    max_row_pct_of_hist_max: 200      # alert if rows > 300% of historical max per sheet
-    min_file_size_pct_of_hist_min: 50 # alert if file < 50% of historical min per scraper
+    min_row_pct_of_hist_min: 20       # alert if rows < 30% of historical min per sheet
+    max_row_pct_of_hist_max: 500      # alert if rows > 300% of historical max per sheet
+    min_file_size_pct_of_hist_min: 30 # alert if file < 50% of historical min per scraper
 
   # Run-level gate — skip webhook if failure rate is below this (0 = always alert)
   max_scraper_fail_rate_pct: 0

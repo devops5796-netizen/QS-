@@ -462,7 +462,6 @@ _col_default_listing: &col_default_listing
   - language
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -637,7 +636,14 @@ _col_sale_cars_listing: &col_sale_cars_listing
   - whatsapps
   - product_url
   - images_local_paths
+  - soldDate
+  - ownerPhoneNumber
   - location
+  - oldPrice
+  - showroomId
+  - showroomIsHidden
+  - showroomUri
+  - showroomName
   - pdfUrl
   - specs_*
 
@@ -808,7 +814,6 @@ _col_rent_cars_listing: &col_rent_cars_listing
   - uri
   - viewCount
   - whatsapps
-  - images_local_paths
   - specs_*
 
 _col_bikes_listing: &col_bikes_listing
@@ -947,7 +952,6 @@ _col_video_games_listing: &col_video_games_listing
   - isUpdated
   - isWon
   - language
-  - location
   - moveUpFee
   - neededCredit
   - owner
@@ -1026,7 +1030,6 @@ _col_computers_and_parts_listing: &col_computers_and_parts_listing
   - language
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -1101,7 +1104,6 @@ _col_clothes_listing: &col_clothes_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
   - moveUpFee
   - neededCredit
   - owner
@@ -1178,7 +1180,6 @@ _col_wrist_watches_listings: &col_wrist_watches_listings
   - isUpdated
   - isWon
   - language
-  - location
   - moveUpFee
   - neededCredit
   - oldPrice
@@ -1190,10 +1191,6 @@ _col_wrist_watches_listings: &col_wrist_watches_listings
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomUri
-  - showroomName
   - specs
   - startDate
   - startingPrice
@@ -1416,7 +1413,6 @@ _col_home_appliances_listing: &col_home_appliances_listing
   - location
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -1597,7 +1593,6 @@ _col_kitchen_dining_listing: &col_kitchen_dining_listing
   - title
   - type
   - uri
-  - userCode
   - viewCount
   - whatsapps
   - specs_*
@@ -2067,7 +2062,6 @@ _col_furniture_listing: &col_furniture_listing
   - language
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -2392,7 +2386,6 @@ _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - rejectedMsgAr
   - rejectedMsgEn
   - rejectedMsg
-  - images_local_paths
   - phones
   - platform
   - product_url
@@ -2580,8 +2573,6 @@ _col_heavy_equipments_listing: &col_heavy_equipments_listing
 
 _col_property_listing: &col_property_listing
   - advertisedFor
-  - agent
-  - agentId
   - arDesc
   - bidRate
   - buyNowAmount
@@ -2632,13 +2623,12 @@ _col_property_listing: &col_property_listing
   - isUpdated
   - isWon
   - language
-  - location
   - liveURL
+  - location
   - moveUpFee
   - neededCredit
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
@@ -2651,16 +2641,22 @@ _col_property_listing: &col_property_listing
   - showroomName
   - showroomUri
   - specs
+  - specs_Address
+  - specs_Area Size
+  - specs_Bathrooms
+  - specs_Bedrooms
+  - specs_City
+  - specs_Furnished
+  - specs_Listed For
+  - specs_Type
   - startDate
   - startingPrice
   - status
-  - soldDate
   - tag
   - timeAgo
   - title
   - type
   - uri
-  - userCode
   - viewCount
   - whatsapps
   - specs_*
@@ -3726,6 +3722,9 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_property_listing
+        optional_columns:
+          - agent
+          - agentId
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3742,6 +3741,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_computers_and_parts_listing
+        optional_columns: 
+          - oldPrice
         row_count_range: [1, 100]
     min_file_size_kb: 5
   
@@ -3750,6 +3751,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_video_games_listing
+        optional_columns:
+          - location
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3758,6 +3761,12 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_wrist_watches_listings
+        optional_columns:
+          - location
+          - showroomId
+          - showroomIsHidden
+          - showroomName
+          - showroomUri
         row_count_range: [1, 100]
     min_file_size_kb: 5
  
@@ -3838,6 +3847,9 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_clothes_listing
+        optional_columns:
+          - oldPrice
+          - liveURL
         row_count_range: [1, 100]
     min_file_size_kb: 5
 

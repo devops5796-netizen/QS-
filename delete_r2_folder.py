@@ -10,7 +10,9 @@ CF_R2_SECRET_KEY = os.getenv("CF_R2_SECRET_ACCESS_KEY")
 CF_R2_ENDPOINT_URL = os.getenv("CF_R2_ENDPOINT_URL")
 BUCKET_NAME = os.getenv("CF_R2_BUCKET_NAME")
 
-FOLDER = "DUAE/year=2026/month=08/day=17/Motors/"
+FOLDER = "qatarsale/year=2026/month=08/day=13/showrooms_cars_for_rent/"
+FOLDER = "qatarsale/year=2026/month=08/day=15/showrooms_cars_for_rent/"
+FOLDER = "qatarsale/year=2026/month=08/day=17/showrooms_cars_for_rent/"
 
 
 client = boto3.client(

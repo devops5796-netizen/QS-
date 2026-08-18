@@ -438,6 +438,7 @@ _col_default_listing: &col_default_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -459,21 +460,17 @@ _col_default_listing: &col_default_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
-  - location
   - moveUpFee
   - neededCredit
   - oldPrice
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - soldDate
   - specs
   - startDate
   - startingPrice
@@ -518,6 +515,7 @@ _col_default_2_listing: &col_default_2_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -762,6 +760,7 @@ _col_rent_cars_listing: &col_rent_cars_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -842,6 +841,7 @@ _col_bikes_listing: &col_bikes_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -895,6 +895,319 @@ _col_bikes_listing: &col_bikes_listing
   - whatsapps
   - specs_*
 
+_col_video_games_listing: &col_video_games_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - location
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_computers_and_parts_listing: &col_computers_and_parts_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - moveUpFee
+  - neededCredit
+  - oldPrice
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_clothes_listing: &col_clothes_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - liveURL
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_wrist_watches_listings: &col_wrist_watches_listings
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - location
+  - moveUpFee
+  - neededCredit
+  - oldPrice
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - showroomId
+  - showroomIsHidden
+  - showroomUri
+  - showroomName
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
 _col_cashier_generators_shaving_listing: &col_cashier_generators_shaving_listing
   - advertisedFor
   - arDesc
@@ -925,6 +1238,7 @@ _col_cashier_generators_shaving_listing: &col_cashier_generators_shaving_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -971,7 +1285,7 @@ _col_cashier_generators_shaving_listing: &col_cashier_generators_shaving_listing
   - whatsapps
   - specs_*
 
-_col_home_appliances_kids_listing: &col_home_appliances_kids_listing
+_col_kids_listing: &col_kids_listing
   - advertisedFor
   - arDesc
   - bidRate
@@ -1001,6 +1315,83 @@ _col_home_appliances_kids_listing: &col_home_appliances_kids_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_home_appliances_listing: &col_home_appliances_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1028,7 +1419,6 @@ _col_home_appliances_kids_listing: &col_home_appliances_kids_listing
   - oldPrice
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
@@ -1039,7 +1429,6 @@ _col_home_appliances_kids_listing: &col_home_appliances_kids_listing
   - showroomIsHidden
   - showroomName
   - showroomUri
-  - soldDate
   - specs
   - startDate
   - startingPrice
@@ -1084,6 +1473,7 @@ _col_escalator_tracking_sys_listing: &col_escalator_tracking_sys_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1132,6 +1522,86 @@ _col_escalator_tracking_sys_listing: &col_escalator_tracking_sys_listing
   - whatsapps
   - specs_*
 
+_col_kitchen_dining_listing: &col_kitchen_dining_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - showroomId
+  - showroomIsHidden
+  - showroomName
+  - showroomUri
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
 _col_services_listing: &col_services_listing
   - advertisedFor
   - arDesc
@@ -1162,6 +1632,7 @@ _col_services_listing: &col_services_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1249,6 +1720,7 @@ _col_elevators_building_materials_listing: &col_elevators_building_materials_lis
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1333,6 +1805,7 @@ _col_aquariums_bikes_accessories_listing: &col_aquariums_bikes_accessories_listi
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1412,6 +1885,7 @@ _col_jewellery_car_accessories_listing: &col_jewellery_car_accessories_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1433,24 +1907,17 @@ _col_jewellery_car_accessories_listing: &col_jewellery_car_accessories_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
   - location
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
   - specs
   - startDate
   - startingPrice
@@ -1465,7 +1932,7 @@ _col_jewellery_car_accessories_listing: &col_jewellery_car_accessories_listing
   - whatsapps
   - specs_*
 
-_col_special_numbers_furniture_listing: &col_special_numbers_furniture_listing
+_col_special_numbers_listing: &col_special_numbers_listing
   - advertisedFor
   - arDesc
   - bidRate
@@ -1495,6 +1962,7 @@ _col_special_numbers_furniture_listing: &col_special_numbers_furniture_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1516,8 +1984,87 @@ _col_special_numbers_furniture_listing: &col_special_numbers_furniture_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
-  - location
+  - moveUpFee
+  - neededCredit
+  - oldPrice
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - showroomId
+  - showroomIsHidden
+  - showroomUri
+  - showroomName
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_furniture_listing: &col_furniture_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
   - moveUpFee
   - neededCredit
   - oldPrice
@@ -1577,6 +2124,7 @@ _col_tools_watercrafts_listings: &col_tools_watercrafts_listings
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1599,24 +2147,16 @@ _col_tools_watercrafts_listings: &col_tools_watercrafts_listings
   - isWon
   - language
   - liveURL
-  - location
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
-  - soldDate
   - specs
   - startDate
   - startingPrice
@@ -1631,7 +2171,7 @@ _col_tools_watercrafts_listings: &col_tools_watercrafts_listings
   - whatsapps
   - specs_*
 
-_col_glasses_shoes_listing: &col_glasses_shoes_listing
+_col_shoes_listing: &col_shoes_listing
   - advertisedFor
   - arDesc
   - bidRate
@@ -1661,6 +2201,87 @@ _col_glasses_shoes_listing: &col_glasses_shoes_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - location
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - rejectedMsg
+  - rejectedMsgAr
+  - rejectedMsgEn
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_glasses_listing: &col_glasses_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1743,6 +2364,7 @@ _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1767,19 +2389,14 @@ _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - location
   - moveUpFee
   - neededCredit
-  - oldPrice
-  - owner
-  - ownerId
-  - pdfUrl
+  - rejectedMsgAr
+  - rejectedMsgEn
+  - rejectedMsg
+  - images_local_paths
   - phones
-  - pinFee
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
   - specs
   - startDate
   - startingPrice
@@ -1824,6 +2441,7 @@ _col_pet_accessories_listing: &col_pet_accessories_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1902,6 +2520,7 @@ _col_heavy_equipments_listing: &col_heavy_equipments_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1991,6 +2610,7 @@ _col_property_listing: &col_property_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2013,10 +2633,12 @@ _col_property_listing: &col_property_listing
   - isWon
   - language
   - location
+  - liveURL
   - moveUpFee
   - neededCredit
   - owner
   - ownerId
+  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
@@ -2032,6 +2654,7 @@ _col_property_listing: &col_property_listing
   - startDate
   - startingPrice
   - status
+  - soldDate
   - tag
   - timeAgo
   - title
@@ -2072,6 +2695,7 @@ _col_mobile_tablets_listing: &col_mobile_tablets_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2093,24 +2717,16 @@ _col_mobile_tablets_listing: &col_mobile_tablets_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
-  - location
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - rejectedMsg
-  - rejectedMsgAr
-  - rejectedMsgEn
-  - soldDate
   - specs
   - startDate
   - startingPrice
@@ -2155,6 +2771,7 @@ _col_fishing_equipment_listing: &col_fishing_equipment_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2203,6 +2820,84 @@ _col_fishing_equipment_listing: &col_fishing_equipment_listing
   - whatsapps
   - specs_*
 
+_col_musical_instruments_listing: &col_musical_instruments_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - location
+  - moveUpFee
+  - neededCredit
+  - oldPrice
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
 _col_toys_games_listing: &col_toys_games_listing
   - advertisedFor
   - arDesc
@@ -2233,6 +2928,7 @@ _col_toys_games_listing: &col_toys_games_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2255,26 +2951,17 @@ _col_toys_games_listing: &col_toys_games_listing
   - isWon
   - language
   - liveURL
-  - location
   - moveUpFee
   - neededCredit
   - oldPrice
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - rejectedMsg
-  - rejectedMsgAr
-  - rejectedMsgEn
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
   - specs
   - startDate
   - startingPrice
@@ -2319,6 +3006,7 @@ _col_education_listing: &col_education_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2398,6 +3086,7 @@ _col_men_accessories_listing: &col_men_accessories_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2475,6 +3164,7 @@ _col_travel_accessories_listing: &col_travel_accessories_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2551,6 +3241,7 @@ _col_business_industrial_listing: &col_business_industrial_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2630,6 +3321,7 @@ _col_inflatable_games_listing: &col_inflatable_games_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2710,6 +3402,7 @@ _col_porta_cabin_listing: &col_porta_cabin_listing
   - id
   - images
   - imagesCount
+  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2773,7 +3466,6 @@ _col_showrooms_listing: &col_showrooms_listing
   - whatsapps
   - posts_count
   - views_count
-  - r2_image
 
 # ── PER-SCRAPER SCHEMAS ──────────────────────────────────────
 excel_schema:
@@ -2937,7 +3629,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_glasses_shoes_listing
+        required_columns: *col_glasses_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3049,7 +3741,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_default_listing
+        required_columns: *col_computers_and_parts_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
   
@@ -3057,7 +3749,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_default_listing
+        required_columns: *col_video_games_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3065,7 +3757,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_default_listing
+        required_columns: *col_wrist_watches_listings
         row_count_range: [1, 100]
     min_file_size_kb: 5
  
@@ -3097,7 +3789,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_home_appliances_kids_listing
+        required_columns: *col_kids_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3105,7 +3797,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_glasses_shoes_listing
+        required_columns: *col_shoes_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3121,7 +3813,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_services_listing
+        required_columns: *col_kitchen_dining_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3145,7 +3837,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_default_listing
+        required_columns: *col_clothes_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3177,7 +3869,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_default_listing
+        required_columns: *col_musical_instruments_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3193,7 +3885,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_special_numbers_furniture_listing
+        required_columns: *col_special_numbers_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3201,7 +3893,7 @@ excel_schema:
     excel_file_pattern: "{subcategory_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_home_appliances_kids_listing
+        required_columns: *col_home_appliances_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3225,7 +3917,7 @@ excel_schema:
     excel_file_pattern: "{subcategory_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_special_numbers_furniture_listing
+        required_columns: *col_furniture_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3250,6 +3942,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_showrooms_listing
+        optional_columns:
+          - r2_image
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3258,6 +3952,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_showrooms_listing
+        optional_columns:
+          - r2_image
         row_count_range: [1, 100]
     min_file_size_kb: 5
 

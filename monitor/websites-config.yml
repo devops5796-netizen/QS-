@@ -3975,7 +3975,7 @@ alert_thresholds:
 
   # Historical trend checks (requires monitor_stats.yml in R2)
   trend:
-    min_observed_days: 7
+    min_observed_days: 3
     min_row_pct_of_hist_min: 20       # alert if rows < 30% of historical min per sheet
     max_row_pct_of_hist_max: 500      # alert if rows > 300% of historical max per sheet
     min_file_size_pct_of_hist_min: 30 # alert if file < 50% of historical min per scraper

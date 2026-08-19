@@ -868,24 +868,16 @@ _col_bikes_listing: &col_bikes_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
-  - location
   - moveUpFee
   - neededCredit
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
-  - soldDate
   - specs
   - startDate
   - startingPrice
@@ -1573,16 +1565,11 @@ _col_kitchen_dining_listing: &col_kitchen_dining_listing
   - neededCredit
   - owner
   - ownerId
-  - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
   - specs
   - startDate
   - startingPrice
@@ -1849,7 +1836,83 @@ _col_aquariums_bikes_accessories_listing: &col_aquariums_bikes_accessories_listi
   - whatsapps
   - specs_*
 
-_col_jewellery_car_accessories_listing: &col_jewellery_car_accessories_listing
+_col_car_accessories_listing: &col_car_accessories_listing
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_jewellery_listing: &col_jewellery_listing
   - advertisedFor
   - arDesc
   - bidRate
@@ -1980,7 +2043,6 @@ _col_special_numbers_listing: &col_special_numbers_listing
   - language
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -2227,9 +2289,6 @@ _col_shoes_listing: &col_shoes_listing
   - platform
   - product_url
   - promotedFee
-  - rejectedMsg
-  - rejectedMsgAr
-  - rejectedMsgEn
   - specs
   - startDate
   - startingPrice
@@ -2297,22 +2356,16 @@ _col_glasses_listing: &col_glasses_listing
   - isWon
   - language
   - liveURL
-  - location
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
-  - ownerPhoneNumber
   - pdfUrl
   - phones
   - pinFee
   - platform
   - product_url
   - promotedFee
-  - rejectedMsg
-  - rejectedMsgAr
-  - rejectedMsgEn
   - specs
   - startDate
   - startingPrice
@@ -2379,12 +2432,8 @@ _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - isUpdated
   - isWon
   - language
-  - location
   - moveUpFee
   - neededCredit
-  - rejectedMsgAr
-  - rejectedMsgEn
-  - rejectedMsg
   - phones
   - platform
   - product_url
@@ -2622,7 +2671,6 @@ _col_property_listing: &col_property_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
   - location
   - moveUpFee
   - neededCredit
@@ -2937,10 +2985,8 @@ _col_toys_games_listing: &col_toys_games_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -3096,7 +3142,6 @@ _col_men_accessories_listing: &col_men_accessories_listing
   - isWon
   - language
   - liveURL
-  - location
   - moveUpFee
   - neededCredit
   - owner
@@ -3680,7 +3725,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_jewellery_car_accessories_listing
+        required_columns: *col_car_accessories_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3696,7 +3741,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_jewellery_car_accessories_listing
+        required_columns: *col_car_accessories_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3704,7 +3749,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_jewellery_car_accessories_listing
+        required_columns: *col_jewellery_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3716,6 +3761,7 @@ excel_schema:
         optional_columns:
           - agent
           - agentId
+          - liveURL
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3783,6 +3829,9 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_toys_games_listing
+        optional_columns:
+          - liveURL
+          - oldPrice
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3799,6 +3848,10 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_shoes_listing
+        optional_columns:
+          - rejectedMsgAr
+          - rejectedMsgEn
+          - rejectedMsg
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3815,6 +3868,14 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_kitchen_dining_listing
+        optional_columns:
+          - showroomId
+          - showroomIsHidden
+          - showroomName
+          - showroomUri
+          - pdfUrl
+          - liveURL
+          - userCode
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3866,6 +3927,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_men_accessories_listing
+        optional_columns:
+          - location
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3890,6 +3953,9 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_special_numbers_listing
+        optional_columns:
+          - location
+          - oldPrice
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3938,6 +4004,11 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_sportswear_equipment_listing
+        optional_columns:
+          - location
+          - rejectedMsgAr
+          - rejectedMsgEn
+          - rejectedMsg
         row_count_range: [1, 100]
     min_file_size_kb: 5
 

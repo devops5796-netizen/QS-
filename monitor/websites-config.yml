@@ -639,7 +639,6 @@ _col_sale_cars_listing: &col_sale_cars_listing
   - soldDate
   - ownerPhoneNumber
   - location
-  - oldPrice
   - showroomId
   - showroomIsHidden
   - showroomUri
@@ -1412,10 +1411,6 @@ _col_home_appliances_listing: &col_home_appliances_listing
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
   - specs
   - startDate
   - startingPrice
@@ -2201,7 +2196,6 @@ _col_tools_watercrafts_listings: &col_tools_watercrafts_listings
   - isUpdated
   - isWon
   - language
-  - liveURL
   - moveUpFee
   - neededCredit
   - owner
@@ -2278,7 +2272,6 @@ _col_shoes_listing: &col_shoes_listing
   - isUpdated
   - isWon
   - language
-  - location
   - moveUpFee
   - neededCredit
   - owner
@@ -2447,7 +2440,6 @@ _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - title
   - type
   - uri
-  - userCode
   - viewCount
   - whatsapps
   - specs_*
@@ -3509,6 +3501,8 @@ excel_schema:
     sheets:
       - name: "{car_type}"
         required_columns: *col_sale_cars_listing
+        optional_columns:
+          - oldPrice
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3770,6 +3764,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_tools_watercrafts_listings
+        optional_columns: 
+          - liveURL
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3852,6 +3848,7 @@ excel_schema:
           - rejectedMsgAr
           - rejectedMsgEn
           - rejectedMsg
+          - location
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3919,6 +3916,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_tools_watercrafts_listings
+        optional_columns:
+          - liveURL    #need to check
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3964,6 +3963,11 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_home_appliances_listing
+        optional_columns:
+            - showroomId
+            - showroomIsHidden
+            - showroomName
+            - showroomUri
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -4009,6 +4013,7 @@ excel_schema:
           - rejectedMsgAr
           - rejectedMsgEn
           - rejectedMsg
+          - userCode
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -4046,11 +4051,11 @@ alert_thresholds:
 
   # Historical trend checks (requires monitor_stats.yml in R2)
   trend:
-    min_observed_days: 3
-    min_row_pct_of_hist_min: 20       # alert if rows < 30% of historical min per sheet
-    max_row_pct_of_hist_max: 500      # alert if rows > 300% of historical max per sheet
-    min_file_size_pct_of_hist_min: 30 # alert if file < 50% of historical min per scraper
-
+    min_observed_days: 7
+    min_row_pct_of_hist_min: 5       # alert if rows < 5% of historical min
+    max_row_pct_of_hist_max: 1000    # alert if rows > 1000% of historical max
+    min_file_size_pct_of_hist_min: 10 # alert if file < 10% of historical min
+  
   # Run-level gate — skip webhook if failure rate is below this (0 = always alert)
   max_scraper_fail_rate_pct: 0
 

@@ -15,9 +15,6 @@ FOLDER = "DUAE/year=2026/month=08/day=15/"
 FOLDER = "DUAE/year=2026/month=08/day=14/"
 FOLDER = "DUAE/year=2026/month=08/day=14/"
 FOLDER = "qatarsale/year=2026/month=08/day=22/showrooms_cars_for_rent"
-FOLDER = "qatarsale/year=2026/month=08/day=22/showrooms_cars_for_sale"
-
-
 
 
 client = boto3.client(

@@ -484,8 +484,6 @@ _col_default_listing: &col_default_listing
   - whatsapps
   - specs_*
 
-id	has360	moveUpFee	promotedFee	isService	title	enUrl	uri	desc	hasPdf	pdfUrl	language	platform	isBusiness	advertisedFor	ownerId	isDeleted	condition	type	status	endStatus	forView	categoryPath	timeAgo	currentDate	startDate	fee	startingPrice	isExpired	isSold	hasLive	isActiveCategory	isMyWinner	createdAt	isUpdated	tag	imagesCount	viewCount	fansCount	hasPendingUpdate	hasActiveVersion	hasPendingPrice	pinFee	isPinned	durationIndex	duration	arDesc	enDesc	isHasMore	bidRate	buyNowAmount	neededCredit	isWon	inStudio	isDemo	isActive	isSaved	isStarted	canComplain	owner	userCode	images	isPromoted	isPinnedToShowroom	hasCoverImages	endDate	isLocked	isBuyNow	specs	phones	whatsapps	product_url	images_local_paths
-
 _col_default_2_listing: &col_default_2_listing
   - advertisedFor
   - arDesc

@@ -198,13 +198,11 @@ jobs:
               region_name           = "auto",
           )
 
-          success_sheets = []
           empty_showrooms = []
+          valid_sheets_data = []   # ← جديد: نجمع الـ valid sheets هنا
           all_data = []
 
-          # ── Build Excel (manual writer, no with block) ───────────────
-          writer = pd.ExcelWriter("all_showrooms.xlsx", engine="openpyxl")
-
+          # ── Phase 1: Read & filter ─────────────────────────────────
           for f in excel_files:
               try:
                   base_name  = os.path.basename(f)
@@ -222,31 +220,39 @@ jobs:
                       print(f"  ⚠ EMPTY: {sheet_name}")
                       continue
 
-                  original = sheet_name
-                  counter  = 1
-                  while sheet_name in writer.sheets:
-                      sheet_name = f"{original}_{counter}"
-                      counter   += 1
-
-                  df.to_excel(writer, sheet_name=sheet_name, index=False)
-                  success_sheets.append({"name": sheet_name, "rows": len(df)})
+                  valid_sheets_data.append((sheet_name, df))
                   print(f"  ✓ {sheet_name}: {len(df)} rows")
-
-                  sheet_data = df.to_dict(orient='records')
-                  for record in sheet_data:
-                      record['showroom'] = sheet_name
-                  all_data.extend(sheet_data)
 
               except Exception as e:
                   sheet_name = os.path.basename(f).replace("showroom_", "").replace(".xlsx", "")[:31]
                   print(f"  ✗ FAILED: {sheet_name} — {e}")
 
-          writer.close()
-
           # ── EXIT EARLY: all files were empty ─────────────────────────
-          if not success_sheets:
+          if not valid_sheets_data:
               print("❌ All showrooms are empty. Nothing to upload.")
               sys.exit(0)
+
+          # ── Phase 2: Build Excel (مضمون فيه sheet واحد على الأقل) ──
+          success_sheets = []
+          writer = pd.ExcelWriter("all_showrooms.xlsx", engine="openpyxl")
+
+          for sheet_name, df in valid_sheets_data:
+              original = sheet_name
+              counter  = 1
+              while sheet_name in writer.sheets:
+                  sheet_name = f"{original}_{counter}"
+                  counter   += 1
+
+              df.to_excel(writer, sheet_name=sheet_name, index=False)
+              success_sheets.append({"name": sheet_name, "rows": len(df)})
+              print(f"  ✓ Written sheet '{sheet_name}': {len(df)} rows")
+
+              sheet_data = df.to_dict(orient='records')
+              for record in sheet_data:
+                  record['showroom'] = sheet_name
+              all_data.extend(sheet_data)
+
+          writer.close()
 
           # Upload Excel
           excel_key = f"{base_path}/excel/all_showrooms.xlsx"

@@ -202,46 +202,48 @@ jobs:
           empty_showrooms = []
           all_data = []
 
-          # ── Build Excel (must finish with block before sys.exit) ─────
-          with pd.ExcelWriter("all_showrooms.xlsx", engine="openpyxl") as writer:
-              for f in excel_files:
-                  try:
-                      base_name  = os.path.basename(f)
-                      sheet_name = base_name.replace("showroom_", "").replace(".xlsx", "")[:31]
-                      df         = pd.read_excel(f, sheet_name=0)
+          # ── Build Excel (manual writer, no with block) ───────────────
+          writer = pd.ExcelWriter("all_showrooms.xlsx", engine="openpyxl")
 
-                      is_empty_marker = (
-                          len(df) == 1
-                          and "status" in df.columns
-                          and str(df["status"].iloc[0]) == "empty - no products found"
-                      )
+          for f in excel_files:
+              try:
+                  base_name  = os.path.basename(f)
+                  sheet_name = base_name.replace("showroom_", "").replace(".xlsx", "")[:31]
+                  df         = pd.read_excel(f, sheet_name=0)
 
-                      if df.empty or is_empty_marker:
-                          empty_showrooms.append(sheet_name)
-                          print(f"  ⚠ EMPTY: {sheet_name}")
-                          continue
+                  is_empty_marker = (
+                      len(df) == 1
+                      and "status" in df.columns
+                      and str(df["status"].iloc[0]) == "empty - no products found"
+                  )
 
-                      original = sheet_name
-                      counter  = 1
-                      while sheet_name in writer.sheets:
-                          sheet_name = f"{original}_{counter}"
-                          counter   += 1
+                  if df.empty or is_empty_marker:
+                      empty_showrooms.append(sheet_name)
+                      print(f"  ⚠ EMPTY: {sheet_name}")
+                      continue
 
-                      df.to_excel(writer, sheet_name=sheet_name, index=False)
-                      success_sheets.append({"name": sheet_name, "rows": len(df)})
-                      print(f"  ✓ {sheet_name}: {len(df)} rows")
+                  original = sheet_name
+                  counter  = 1
+                  while sheet_name in writer.sheets:
+                      sheet_name = f"{original}_{counter}"
+                      counter   += 1
 
-                      sheet_data = df.to_dict(orient='records')
-                      for record in sheet_data:
-                          record['showroom'] = sheet_name
-                      all_data.extend(sheet_data)
+                  df.to_excel(writer, sheet_name=sheet_name, index=False)
+                  success_sheets.append({"name": sheet_name, "rows": len(df)})
+                  print(f"  ✓ {sheet_name}: {len(df)} rows")
 
-                  except Exception as e:
-                      sheet_name = os.path.basename(f).replace("showroom_", "").replace(".xlsx", "")[:31]
-                      print(f"  ✗ FAILED: {sheet_name} — {e}")
+                  sheet_data = df.to_dict(orient='records')
+                  for record in sheet_data:
+                      record['showroom'] = sheet_name
+                  all_data.extend(sheet_data)
+
+              except Exception as e:
+                  sheet_name = os.path.basename(f).replace("showroom_", "").replace(".xlsx", "")[:31]
+                  print(f"  ✗ FAILED: {sheet_name} — {e}")
+
+          writer.close()
 
           # ── EXIT EARLY: all files were empty ─────────────────────────
-          # (must be OUTSIDE the with block so ExcelWriter closes cleanly)
           if not success_sheets:
               print("❌ All showrooms are empty. Nothing to upload.")
               sys.exit(0)

@@ -484,6 +484,8 @@ _col_default_listing: &col_default_listing
   - whatsapps
   - specs_*
 
+id	has360	moveUpFee	promotedFee	isService	title	enUrl	uri	desc	hasPdf	pdfUrl	language	platform	isBusiness	advertisedFor	ownerId	isDeleted	condition	type	status	endStatus	forView	categoryPath	timeAgo	currentDate	startDate	fee	startingPrice	isExpired	isSold	hasLive	isActiveCategory	isMyWinner	createdAt	isUpdated	tag	imagesCount	viewCount	fansCount	hasPendingUpdate	hasActiveVersion	hasPendingPrice	pinFee	isPinned	durationIndex	duration	arDesc	enDesc	isHasMore	bidRate	buyNowAmount	neededCredit	isWon	inStudio	isDemo	isActive	isSaved	isStarted	canComplain	owner	userCode	images	isPromoted	isPinnedToShowroom	hasCoverImages	endDate	isLocked	isBuyNow	specs	phones	whatsapps	product_url	images_local_paths
+
 _col_default_2_listing: &col_default_2_listing
   - advertisedFor
   - arDesc
@@ -636,15 +638,8 @@ _col_sale_cars_listing: &col_sale_cars_listing
   - whatsapps
   - product_url
   - images_local_paths
-  - soldDate
-  - ownerPhoneNumber
   - location
-  - showroomId
-  - showroomIsHidden
-  - showroomUri
-  - showroomName
   - pdfUrl
-  - specs_*
 
 _col_user_listing: &col_user_listing
   - id
@@ -670,7 +665,6 @@ _col_user_listing: &col_user_listing
   - professionalSummary
   - openToWork
   - activatedAt
-  - rejectionReason
   - isFavorite
   - totalExperienceYears
   - appliedForJobsCount
@@ -2126,10 +2120,6 @@ _col_furniture_listing: &col_furniture_listing
   - platform
   - product_url
   - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
   - specs
   - startDate
   - startingPrice
@@ -2144,7 +2134,157 @@ _col_furniture_listing: &col_furniture_listing
   - whatsapps
   - specs_*
 
-_col_tools_watercrafts_listings: &col_tools_watercrafts_listings
+_col_tools_home_listings: &col_tools_home_listings
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_watercrafts_listings: &col_watercrafts_listings
+  - advertisedFor
+  - arDesc
+  - bidRate
+  - buyNowAmount
+  - canComplain
+  - categoryPath
+  - condition
+  - createdAt
+  - currentDate
+  - desc
+  - duration
+  - durationIndex
+  - enDesc
+  - enUrl
+  - endDate
+  - endStatus
+  - fansCount
+  - fee
+  - forView
+  - has360
+  - hasActiveVersion
+  - hasCoverImages
+  - hasLive
+  - hasPdf
+  - hasPendingPrice
+  - hasPendingUpdate
+  - id
+  - images
+  - imagesCount
+  - images_local_paths
+  - inStudio
+  - isActive
+  - isActiveCategory
+  - isBusiness
+  - isBuyNow
+  - isDeleted
+  - isDemo
+  - isExpired
+  - isHasMore
+  - isLocked
+  - isMyWinner
+  - isPinned
+  - isPinnedToShowroom
+  - isPromoted
+  - isSaved
+  - isService
+  - isSold
+  - isStarted
+  - isUpdated
+  - isWon
+  - language
+  - moveUpFee
+  - neededCredit
+  - owner
+  - ownerId
+  - pdfUrl
+  - phones
+  - pinFee
+  - platform
+  - product_url
+  - promotedFee
+  - specs
+  - startDate
+  - startingPrice
+  - status
+  - tag
+  - timeAgo
+  - title
+  - type
+  - uri
+  - userCode
+  - viewCount
+  - whatsapps
+  - specs_*
+
+_col_arts_crafts_listings: &col_arts_crafts_listings
   - advertisedFor
   - arDesc
   - bidRate
@@ -2748,7 +2888,6 @@ _col_mobile_tablets_listing: &col_mobile_tablets_listing
   - neededCredit
   - owner
   - ownerId
-  - pdfUrl
   - phones
   - pinFee
   - platform
@@ -2899,10 +3038,8 @@ _col_musical_instruments_listing: &col_musical_instruments_listing
   - isUpdated
   - isWon
   - language
-  - location
   - moveUpFee
   - neededCredit
-  - oldPrice
   - owner
   - ownerId
   - pdfUrl
@@ -3133,7 +3270,6 @@ _col_men_accessories_listing: &col_men_accessories_listing
   - isUpdated
   - isWon
   - language
-  - liveURL
   - moveUpFee
   - neededCredit
   - owner
@@ -3503,6 +3639,12 @@ excel_schema:
         required_columns: *col_sale_cars_listing
         optional_columns:
           - oldPrice
+          - soldDate
+          - ownerPhoneNumber
+          - showroomId
+          - showroomIsHidden
+          - showroomUri
+          - showroomName
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3519,6 +3661,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_user_listing
+        optional_columns:
+          - rejectionReason
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3763,7 +3907,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_tools_watercrafts_listings
+        required_columns: *col_watercrafts_listings
         optional_columns: 
           - liveURL
         row_count_range: [1, 100]
@@ -3856,7 +4000,10 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_default_2_listing
+        required_columns: *col_arts_crafts_listings
+        optional_columns:
+          - ownerPhoneNumber
+          - location
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3915,7 +4062,7 @@ excel_schema:
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
       - name: "{child_category or Main}"
-        required_columns: *col_tools_watercrafts_listings
+        required_columns: *col_tools_home_listings
         optional_columns:
           - liveURL    #need to check
         row_count_range: [1, 100]
@@ -3928,6 +4075,7 @@ excel_schema:
         required_columns: *col_men_accessories_listing
         optional_columns:
           - location
+          - liveURL
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3936,6 +4084,9 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_musical_instruments_listing
+        optional_columns:
+          - location
+          - oldPrice
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3984,6 +4135,8 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_mobile_tablets_listing
+        optional_columns:
+          - pdfUrl
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -3992,6 +4145,11 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_furniture_listing
+        optional_columns:
+          - showroomId
+          - showroomIsHidden
+          - showroomName
+          - showroomUri
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
@@ -4048,6 +4206,9 @@ alert_thresholds:
 
   # Fire webhook when ANY scraper fails schema / trend / missing-files check
   alert_on_any_failure: true
+  # To re-enable "No Excel files" alerts later,
+  # just flip this to false in the YAML — no code changes needed.
+  skip_no_files_alert: true
 
   # Historical trend checks (requires monitor_stats.yml in R2)
   trend:

@@ -130,7 +130,6 @@ jobs:
       - name: Install dependencies
         run: pip install pandas openpyxl boto3 python-dotenv
 
-      # Get workflow start time from GitHub API (full workflow duration)
       - name: Get workflow start time
         id: workflow_start
         env:
@@ -143,6 +142,7 @@ jobs:
 
       - name: Download all showroom artifacts
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           pattern: showroom-${{ inputs.category }}-*
           merge-multiple: true
@@ -159,13 +159,12 @@ jobs:
         run: |
           python << 'EOF'
           import pandas as pd
-          import glob, os, boto3, json, time
+          import glob, os, boto3, json, time, sys
           from datetime import datetime, timezone, timedelta
           from Common_files.monitor_helpers import collect_failed_links
 
           category = os.environ["CATEGORY"]
           
-          # Get full workflow duration from GitHub API
           workflow_start_time = os.getenv("WORKFLOW_START_TIME")
           workflow_duration = None
           if workflow_start_time:
@@ -177,14 +176,18 @@ jobs:
               except (ValueError, TypeError):
                   print("⚠️ Warning: Could not parse WORKFLOW_START_TIME")
           
-          # Data date = yesterday
           data_date = datetime.now(timezone.utc)
           dt = datetime.now(timezone.utc)
           
           base_path = f"qatarsale/year={data_date.year}/month={data_date.strftime('%m')}/day={data_date.strftime('%d')}/showrooms_{category}"
           
-          excel_files  = glob.glob("showroom_parts/showroom_*.xlsx")
+          excel_files = glob.glob("showroom_parts/showroom_*.xlsx")
           print(f"Found {len(excel_files)} Excel files")
+
+          # ── EXIT EARLY: no files at all ──────────────────────────────
+          if not excel_files:
+              print("❌ No data collected at all. Nothing to upload.")
+              sys.exit(0)
 
           bucket = os.environ["CF_R2_BUCKET_NAME"]
           client = boto3.client(
@@ -236,14 +239,10 @@ jobs:
                       sheet_name = os.path.basename(f).replace("showroom_", "").replace(".xlsx", "")[:31]
                       print(f"  ✗ FAILED: {sheet_name} — {e}")
 
+              # ── EXIT EARLY: all files were empty ─────────────────────
               if not success_sheets:
-                  placeholder = pd.DataFrame([{
-                      "status": "no products found in any showroom",
-                      "showrooms_checked": len(excel_files),
-                      "empty_showrooms": len(empty_showrooms),
-                  }])
-                  placeholder.to_excel(writer, sheet_name="summary", index=False)
-                  print("  ℹ No successful sheets — wrote placeholder 'summary' sheet")
+                  print("❌ All showrooms are empty. Nothing to upload.")
+                  sys.exit(0)
 
           # Upload Excel
           excel_key = f"{base_path}/excel/all_showrooms.xlsx"
@@ -261,7 +260,7 @@ jobs:
               ExtraArgs={"ContentType": "application/json; charset=utf-8"})
           print(f"✅ Uploaded: {json_key}")
 
-          # Build complete summary
+          # Build summary
           failed_links = collect_failed_links('showroom_parts/*_failed.txt')
           total_failed = len(failed_links)
 

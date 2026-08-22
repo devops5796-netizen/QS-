@@ -202,6 +202,7 @@ jobs:
           empty_showrooms = []
           all_data = []
 
+          # ── Build Excel (must finish with block before sys.exit) ─────
           with pd.ExcelWriter("all_showrooms.xlsx", engine="openpyxl") as writer:
               for f in excel_files:
                   try:
@@ -239,10 +240,11 @@ jobs:
                       sheet_name = os.path.basename(f).replace("showroom_", "").replace(".xlsx", "")[:31]
                       print(f"  ✗ FAILED: {sheet_name} — {e}")
 
-              # ── EXIT EARLY: all files were empty ─────────────────────
-              if not success_sheets:
-                  print("❌ All showrooms are empty. Nothing to upload.")
-                  sys.exit(0)
+          # ── EXIT EARLY: all files were empty ─────────────────────────
+          # (must be OUTSIDE the with block so ExcelWriter closes cleanly)
+          if not success_sheets:
+              print("❌ All showrooms are empty. Nothing to upload.")
+              sys.exit(0)
 
           # Upload Excel
           excel_key = f"{base_path}/excel/all_showrooms.xlsx"

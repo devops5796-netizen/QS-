@@ -679,7 +679,6 @@ _col_user_listing: &col_user_listing
   - uriCode
   - hasActiveVersion
   - profile_url
-  - specs_*
 
 _col_job_listing: &col_job_listing
   - id

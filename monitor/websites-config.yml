@@ -438,7 +438,6 @@ _col_default_listing: &col_default_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -514,7 +513,6 @@ _col_default_2_listing: &col_default_2_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -635,7 +633,6 @@ _col_sale_cars_listing: &col_sale_cars_listing
   - phones
   - whatsapps
   - product_url
-  - images_local_paths
   - location
   - pdfUrl
 
@@ -756,7 +753,6 @@ _col_rent_cars_listing: &col_rent_cars_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -836,7 +832,6 @@ _col_bikes_listing: &col_bikes_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -912,7 +907,6 @@ _col_video_games_listing: &col_video_games_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -988,7 +982,6 @@ _col_computers_and_parts_listing: &col_computers_and_parts_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1064,7 +1057,6 @@ _col_clothes_listing: &col_clothes_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1140,7 +1132,6 @@ _col_wrist_watches_listings: &col_wrist_watches_listings
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1216,7 +1207,6 @@ _col_cashier_generators_shaving_listing: &col_cashier_generators_shaving_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1293,7 +1283,6 @@ _col_kids_listing: &col_kids_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1369,7 +1358,6 @@ _col_home_appliances_listing: &col_home_appliances_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1446,7 +1434,6 @@ _col_escalator_tracking_sys_listing: &col_escalator_tracking_sys_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1525,7 +1512,6 @@ _col_kitchen_dining_listing: &col_kitchen_dining_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1599,7 +1585,6 @@ _col_services_listing: &col_services_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1687,7 +1672,6 @@ _col_elevators_building_materials_listing: &col_elevators_building_materials_lis
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1772,7 +1756,6 @@ _col_aquariums_bikes_accessories_listing: &col_aquariums_bikes_accessories_listi
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1852,7 +1835,6 @@ _col_car_accessories_listing: &col_car_accessories_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -1928,7 +1910,6 @@ _col_jewellery_listing: &col_jewellery_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2005,7 +1986,6 @@ _col_special_numbers_listing: &col_special_numbers_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2085,7 +2065,6 @@ _col_furniture_listing: &col_furniture_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2161,7 +2140,6 @@ _col_tools_home_listings: &col_tools_home_listings
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2235,7 +2213,6 @@ _col_watercrafts_listings: &col_watercrafts_listings
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2311,7 +2288,6 @@ _col_arts_crafts_listings: &col_arts_crafts_listings
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2387,7 +2363,6 @@ _col_shoes_listing: &col_shoes_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2463,7 +2438,6 @@ _col_glasses_listing: &col_glasses_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2540,7 +2514,6 @@ _col_sportswear_equipment_listing: &col_sportswear_equipment_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2611,7 +2584,6 @@ _col_pet_accessories_listing: &col_pet_accessories_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2690,7 +2662,6 @@ _col_heavy_equipments_listing: &col_heavy_equipments_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2778,7 +2749,6 @@ _col_property_listing: &col_property_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2859,7 +2829,6 @@ _col_mobile_tablets_listing: &col_mobile_tablets_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -2934,7 +2903,6 @@ _col_fishing_equipment_listing: &col_fishing_equipment_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3013,7 +2981,6 @@ _col_musical_instruments_listing: &col_musical_instruments_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3089,7 +3056,6 @@ _col_toys_games_listing: &col_toys_games_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3165,7 +3131,6 @@ _col_education_listing: &col_education_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3245,7 +3210,6 @@ _col_men_accessories_listing: &col_men_accessories_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3321,7 +3285,6 @@ _col_travel_accessories_listing: &col_travel_accessories_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3398,7 +3361,6 @@ _col_business_industrial_listing: &col_business_industrial_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3478,7 +3440,6 @@ _col_inflatable_games_listing: &col_inflatable_games_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory
@@ -3559,7 +3520,6 @@ _col_porta_cabin_listing: &col_porta_cabin_listing
   - id
   - images
   - imagesCount
-  - images_local_paths
   - inStudio
   - isActive
   - isActiveCategory

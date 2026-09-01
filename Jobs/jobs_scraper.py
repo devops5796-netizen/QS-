@@ -200,8 +200,8 @@ def run(output_excel: str = "jobs.xlsx", start_page: int = 0, end_page: int = No
 
         if data:
             img_url = job.get("companyPicture", "")
-            r2_image = download_and_upload_image(img_url, uri)
-            data["image_r2_key"] = r2_image
+            # r2_image = download_and_upload_image(img_url, uri)
+            # data["image_r2_key"] = r2_image
             results.append(data)
             print(f"    ✓ {data.get('jobTitleName', 'N/A')} | {data.get('companyName', 'N/A')}")
         else:
@@ -219,8 +219,8 @@ def run(output_excel: str = "jobs.xlsx", start_page: int = 0, end_page: int = No
             if data:
                 job = uri_map.get(uri, {})
                 img_url = job.get("companyPicture", "")
-                r2_image = download_and_upload_image(img_url, uri)
-                data["image_r2_key"] = r2_image
+                # r2_image = download_and_upload_image(img_url, uri)
+                # data["image_r2_key"] = r2_image
                 results.append(data)
                 print(f"  ✓ {uri}")
             else:

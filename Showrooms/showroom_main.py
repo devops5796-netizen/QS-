@@ -103,13 +103,13 @@ def process_showroom(url, category_key: str):
                 print("No listings found for yesterday.")
                 return None, "empty"
 
-            if details.get("cover_image"):
-                r2 = download_images(
-                    [details["cover_image"]],
-                    product_url=url,
-                    category=f"showrooms_{category_key}"
-                )
-                details["r2_image"] = r2[0] if r2 else ""
+            # if details.get("cover_image"):
+            #     r2 = download_images(
+            #         [details["cover_image"]],
+            #         product_url=url,
+            #         category=f"showrooms_{category_key}"
+            #     )
+            #     details["r2_image"] = r2[0] if r2 else ""
 
             for k, v in details.items():
                 df[k] = v

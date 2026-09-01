@@ -135,11 +135,11 @@ def scrape_single(url: str, category: str = "") -> dict:
             return {}
 
         data["product_url"] = url
-        data["images_local_paths"] = download_images(
-            data.get("images", []),
-            product_url=url,
-            category=category
-        )
+        # data["images_local_paths"] = download_images(
+        #     data.get("images", []),
+        #     product_url=url,
+        #     category=category
+        # )
         return data
     except Exception as e:
         print(f"  Error URL: {url} -> {e}")

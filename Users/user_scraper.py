@@ -194,8 +194,8 @@ def run(output_excel: str = "users.xlsx", start_page: int = 0, end_page: int = N
             if filtered_data:
                 total_yesterday += 1
                 img_url = user.get("personalPictureUrl", "")
-                r2_image = download_and_upload_image(img_url, uri)
-                data["image_r2_key"] = r2_image
+                # r2_image = download_and_upload_image(img_url, uri)
+                # data["image_r2_key"] = r2_image
                 results.append(data)
                 print(f"    ✓ {data.get('fullName', 'OK')} (yesterday)")
             else:
@@ -230,8 +230,8 @@ def run(output_excel: str = "users.xlsx", start_page: int = 0, end_page: int = N
                     total_yesterday += 1
                     user = uri_map.get(uri, {})
                     img_url = user.get("personalPictureUrl", "")
-                    r2_image = download_and_upload_image(img_url, uri)
-                    data["image_r2_key"] = r2_image
+                    # r2_image = download_and_upload_image(img_url, uri)
+                    # data["image_r2_key"] = r2_image
                     results.append(data)
                     print(f"  ✓ {uri} (yesterday)")
                 else:

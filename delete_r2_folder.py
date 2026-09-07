@@ -10,13 +10,6 @@ CF_R2_SECRET_KEY = os.getenv("CF_R2_SECRET_ACCESS_KEY")
 CF_R2_ENDPOINT_URL = os.getenv("CF_R2_ENDPOINT_URL")
 BUCKET_NAME = os.getenv("CF_R2_BUCKET_NAME")
 
-FOLDER = "DUAE/year=2026/month=08/day=16/"
-FOLDER = "DUAE/year=2026/month=08/day=15/"
-FOLDER = "DUAE/year=2026/month=08/day=14/"
-FOLDER = "DUAE/year=2026/month=08/day=14/"
-FOLDER = "qatarsale/year=2026/month=08/day=22/showrooms_cars_for_rent"
-
-
 client = boto3.client(
     "s3",
     endpoint_url=CF_R2_ENDPOINT_URL,
@@ -27,91 +20,86 @@ client = boto3.client(
 )
 
 # ==========================================
-# 1. Get EVERYTHING under DUAE/
+# Source and destination
 # ==========================================
 
-keys = []
+SOURCE_KEY = (
+    "DUAE/year=2026/month=09/day=06/"
+    "property/profiles-data/profiles-data.xlsx"
+)
 
-paginator = client.get_paginator("list_objects_v2")
+DESTINATION_KEY = (
+    "DUAE/year=2026/month=09/day=06/"
+    "property/property-for-rent/profiles-data/profiles-data.xlsx"
+)
 
-for page in paginator.paginate(
+print(f"Source:      {SOURCE_KEY}")
+print(f"Destination: {DESTINATION_KEY}")
+
+# ==========================================
+# 1. Copy file to new location
+# ==========================================
+
+print("\nCopying file...")
+
+client.copy_object(
     Bucket=BUCKET_NAME,
-    Prefix=FOLDER
-):
-    for obj in page.get("Contents", []):
-        keys.append(obj["Key"])
+    CopySource={
+        "Bucket": BUCKET_NAME,
+        "Key": SOURCE_KEY
+    },
+    Key=DESTINATION_KEY
+)
 
-print(f"Target: {FOLDER}")
-print(f"Found {len(keys)} objects")
-
-# ==========================================
-# 2. Delete everything in batches of 1000
-# ==========================================
-
-if keys:
-
-    deleted_count = 0
-    error_count = 0
-
-    for i in range(0, len(keys), 1000):
-
-        batch = keys[i:i + 1000]
-
-        response = client.delete_objects(
-            Bucket=BUCKET_NAME,
-            Delete={
-                "Objects": [{"Key": key} for key in batch],
-                "Quiet": False
-            }
-        )
-
-        deleted = response.get("Deleted", [])
-        errors = response.get("Errors", [])
-
-        deleted_count += len(deleted)
-        error_count += len(errors)
-
-        print(
-            f"Deleted {deleted_count} / {len(keys)} "
-            f"| Errors: {error_count}"
-        )
-
-        if errors:
-            for error in errors:
-                print(
-                    f"ERROR: {error.get('Key')} "
-                    f"| {error.get('Code')} "
-                    f"| {error.get('Message')}"
-                )
-
-    print("\n========== RESULT ==========")
-    print(f"Deleted: {deleted_count}")
-    print(f"Errors: {error_count}")
-
-else:
-    print("No files found under DUAE/")
+print("✅ File copied successfully.")
 
 # ==========================================
-# 3. Verify that DUAE/ is empty
+# 2. Verify destination exists
 # ==========================================
 
-remaining = []
+print("\nVerifying destination...")
 
-for page in paginator.paginate(
+client.head_object(
     Bucket=BUCKET_NAME,
-    Prefix=FOLDER
-):
-    for obj in page.get("Contents", []):
-        remaining.append(obj["Key"])
+    Key=DESTINATION_KEY
+)
 
-print(f"Remaining: {len(remaining)}")
+print("✅ Destination file verified.")
 
-if not remaining:
-    print("✅ DUAE/ is completely empty.")
-else:
-    print("❌ Some objects are still remaining.")
+# ==========================================
+# 3. Delete old file
+# ==========================================
 
-    for key in remaining[:20]:
-        print(key)
+print("\nDeleting old file...")
 
-print("Done")
+client.delete_object(
+    Bucket=BUCKET_NAME,
+    Key=SOURCE_KEY
+)
+
+print("✅ Old file deleted.")
+
+# ==========================================
+# 4. Verify old file is gone
+# ==========================================
+
+print("\nVerifying old file removal...")
+
+try:
+    client.head_object(
+        Bucket=BUCKET_NAME,
+        Key=SOURCE_KEY
+    )
+
+    print("❌ Old file still exists!")
+
+except client.exceptions.ClientError as e:
+    if e.response["Error"]["Code"] in ["404", "NoSuchKey"]:
+        print("✅ Old file no longer exists.")
+    else:
+        raise
+
+print("\n========== RESULT ==========")
+print("✅ File moved successfully!")
+print(f"From: {SOURCE_KEY}")
+print(f"To:   {DESTINATION_KEY}")

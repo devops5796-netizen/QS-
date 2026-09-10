@@ -10,6 +10,9 @@ CF_R2_SECRET_KEY = os.getenv("CF_R2_SECRET_ACCESS_KEY")
 CF_R2_ENDPOINT_URL = os.getenv("CF_R2_ENDPOINT_URL")
 BUCKET_NAME = os.getenv("CF_R2_BUCKET_NAME")
 
+FOLDER = "DOMAN/year=2026/month=09/day=10/Motors"
+
+
 client = boto3.client(
     "s3",
     endpoint_url=CF_R2_ENDPOINT_URL,
@@ -20,86 +23,91 @@ client = boto3.client(
 )
 
 # ==========================================
-# Source and destination
+# 1. Get EVERYTHING under DUAE/
 # ==========================================
 
-SOURCE_KEY = (
-    "DUAE/year=2026/month=09/day=06/"
-    "property/profiles-data/profiles-data.xlsx"
-)
+keys = []
 
-DESTINATION_KEY = (
-    "DUAE/year=2026/month=09/day=06/"
-    "property/property-for-rent/profiles-data/profiles-data.xlsx"
-)
+paginator = client.get_paginator("list_objects_v2")
 
-print(f"Source:      {SOURCE_KEY}")
-print(f"Destination: {DESTINATION_KEY}")
-
-# ==========================================
-# 1. Copy file to new location
-# ==========================================
-
-print("\nCopying file...")
-
-client.copy_object(
+for page in paginator.paginate(
     Bucket=BUCKET_NAME,
-    CopySource={
-        "Bucket": BUCKET_NAME,
-        "Key": SOURCE_KEY
-    },
-    Key=DESTINATION_KEY
-)
+    Prefix=FOLDER
+):
+    for obj in page.get("Contents", []):
+        keys.append(obj["Key"])
 
-print("✅ File copied successfully.")
+print(f"Target: {FOLDER}")
+print(f"Found {len(keys)} objects")
 
 # ==========================================
-# 2. Verify destination exists
+# 2. Delete everything in batches of 1000
 # ==========================================
 
-print("\nVerifying destination...")
+if keys:
 
-client.head_object(
+    deleted_count = 0
+    error_count = 0
+
+    for i in range(0, len(keys), 1000):
+
+        batch = keys[i:i + 1000]
+
+        response = client.delete_objects(
+            Bucket=BUCKET_NAME,
+            Delete={
+                "Objects": [{"Key": key} for key in batch],
+                "Quiet": False
+            }
+        )
+
+        deleted = response.get("Deleted", [])
+        errors = response.get("Errors", [])
+
+        deleted_count += len(deleted)
+        error_count += len(errors)
+
+        print(
+            f"Deleted {deleted_count} / {len(keys)} "
+            f"| Errors: {error_count}"
+        )
+
+        if errors:
+            for error in errors:
+                print(
+                    f"ERROR: {error.get('Key')} "
+                    f"| {error.get('Code')} "
+                    f"| {error.get('Message')}"
+                )
+
+    print("\n========== RESULT ==========")
+    print(f"Deleted: {deleted_count}")
+    print(f"Errors: {error_count}")
+
+else:
+    print("No files found under DUAE/")
+
+# ==========================================
+# 3. Verify that DUAE/ is empty
+# ==========================================
+
+remaining = []
+
+for page in paginator.paginate(
     Bucket=BUCKET_NAME,
-    Key=DESTINATION_KEY
-)
+    Prefix=FOLDER
+):
+    for obj in page.get("Contents", []):
+        remaining.append(obj["Key"])
 
-print("✅ Destination file verified.")
+print(f"Remaining: {len(remaining)}")
 
-# ==========================================
-# 3. Delete old file
-# ==========================================
+if not remaining:
+    print("✅ DUAE/ is completely empty.")
+else:
+    print("❌ Some objects are still remaining.")
 
-print("\nDeleting old file...")
+    for key in remaining[:20]:
+        print(key)
 
-client.delete_object(
-    Bucket=BUCKET_NAME,
-    Key=SOURCE_KEY
-)
-
-print("✅ Old file deleted.")
-
-# ==========================================
-# 4. Verify old file is gone
-# ==========================================
-
-print("\nVerifying old file removal...")
-
-try:
-    client.head_object(
-        Bucket=BUCKET_NAME,
-        Key=SOURCE_KEY
-    )
-
-    print("❌ Old file still exists!")
-
-except client.exceptions.ClientError as e:
-    if e.response["Error"]["Code"] in ["404", "NoSuchKey"]:
-        print("✅ Old file no longer exists.")
-    else:
-        raise
-
-print("\n========== RESULT ==========")
-print("✅ File moved successfully!")
-print(f"From: {SOURCE_KEY}")
-print(f"To:   {DESTINATION_KEY}")
+print("Done")

@@ -9,6 +9,7 @@ from .r2_uploader import upload_buffer
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from .request_tracker import tracker
 from datetime import datetime, timezone, timedelta
+import time
 
 API_BASE = "https://production-api.qatarsale.com/api/v2/Products"
 
@@ -112,39 +113,46 @@ def download_images(images: list, product_url: str = "", category: str = "", fmt
     print(f"Images: {uploaded} uploaded, {failed} failed out of {len(images)}")
     return r2_paths
 
-def scrape_single(url: str, category: str = "") -> dict:
-    try:
-        uri = extract_uri_from_url(url)
-        api_url = f"{API_BASE}/{uri}"
-        
-        tracker.log_request(source="product_detail") 
-        response = req.get(api_url, headers=HEADERS, timeout=30)
+def scrape_single(url: str, category: str = "", max_retries: int = 3) -> dict:
+    uri = extract_uri_from_url(url)
+    api_url = f"{API_BASE}/{uri}"
 
-        if response.status_code != 200:
-            print(f"  Bad status {response.status_code}: {url}")
+    for attempt in range(max_retries):
+        try:
+            tracker.log_request(source="product_detail")
+            response = req.get(api_url, headers=HEADERS, timeout=30)
+
+            if response.status_code == 200:
+                api_data = response.json()
+                if not api_data.get("product") or not api_data["product"].get("id"):
+                    print(f"  No product data: {url}")
+                    return {}
+                data = parse_product(api_data)
+                if data:
+                    data["product_url"] = url
+                    # data["images_local_paths"] = download_images(
+                    #     data.get("images", []),
+                    #     product_url=url,
+                    #     category=category
+                    # )
+                return data
+
+            if response.status_code in (428, 429, 403, 503):
+                wait = (attempt + 1) * 2  # 2s, 4s, 6s
+                print(f"  Status {response.status_code}, retrying in {wait}s: {url}")
+                time.sleep(wait)
+                continue
+
+            print(f"  Bad status {response.status_code}: {url} | body: {response.text[:200]}")
             return {}
 
-        api_data = response.json()
+        except Exception as e:
+            print(f"  Error URL: {url} -> {e}")
+            time.sleep(2)
 
-        if not api_data.get("product") or not api_data["product"].get("id"):
-            print(f"  No product data: {url}")
-            return {}
+    return {}
 
-        data = parse_product(api_data)
-        if not data:
-            return {}
-
-        data["product_url"] = url
-        # data["images_local_paths"] = download_images(
-        #     data.get("images", []),
-        #     product_url=url,
-        #     category=category
-        # )
-        return data
-    except Exception as e:
-        print(f"  Error URL: {url} -> {e}")
-        return {}
-
+    
 
 def run(links_csv: str, output_json: str, workers: int = 5, category: str = ""):
     print("\n" + "="*50)

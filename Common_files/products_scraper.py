@@ -1,6 +1,7 @@
 import json
 import os
 import threading
+import random
 import pandas as pd
 import requests as req
 from PIL import Image
@@ -20,6 +21,44 @@ HEADERS = {
     "Referer": "https://qatarsale.com/",
     "Origin": "https://qatarsale.com",
 }
+
+# --- Global rate gate -------------------------------------------------
+# The API seems to 428 whenever two requests from this IP land at the
+# *same instant* (regardless of overall req/min) — the log shows pairs
+# of URLs failing and retrying together every time. This gate forces
+# every thread to space its request out from the last one sent by ANY
+# thread, with random jitter so retries don't re-collide on schedule.
+_RATE_LOCK = threading.Lock()
+_LAST_REQUEST_TS = [0.0]
+MIN_REQUEST_INTERVAL = 1.2  # seconds between any two outgoing requests
+JITTER_RANGE = (0.2, 0.9)   # extra random spacing on top of the minimum
+
+
+def _rate_gate():
+    with _RATE_LOCK:
+        now = time.time()
+        elapsed = now - _LAST_REQUEST_TS[0]
+        wait_needed = MIN_REQUEST_INTERVAL - elapsed
+        if wait_needed > 0:
+            time.sleep(wait_needed + random.uniform(*JITTER_RANGE))
+        else:
+            time.sleep(random.uniform(*JITTER_RANGE))
+        _LAST_REQUEST_TS[0] = time.time()
+
+
+# Shared session so requests reuse the same TCP connection / cookies
+# instead of every call looking like a brand-new, cookie-less client.
+_SESSION = req.Session()
+_SESSION.headers.update(HEADERS)
+
+
+def warm_up_session():
+    """Hit the homepage once before scraping so the session picks up any
+    cookies the site/CDN sets for a 'real' browser visit."""
+    try:
+        _SESSION.get("https://qatarsale.com/", timeout=20)
+    except Exception as e:
+        print(f"  Warm-up request failed (continuing anyway): {e}")
 
 
 def extract_uri_from_url(product_url: str) -> str:
@@ -113,14 +152,15 @@ def download_images(images: list, product_url: str = "", category: str = "", fmt
     print(f"Images: {uploaded} uploaded, {failed} failed out of {len(images)}")
     return r2_paths
 
-def scrape_single(url: str, category: str = "", max_retries: int = 3) -> dict:
+def scrape_single(url: str, category: str = "", max_retries: int = 4) -> dict:
     uri = extract_uri_from_url(url)
     api_url = f"{API_BASE}/{uri}"
 
     for attempt in range(max_retries):
         try:
+            _rate_gate()  # never let two threads fire at the exact same instant
             tracker.log_request(source="product_detail")
-            response = req.get(api_url, headers=HEADERS, timeout=30)
+            response = _SESSION.get(api_url, timeout=30)
 
             if response.status_code == 200:
                 api_data = response.json()
@@ -138,8 +178,14 @@ def scrape_single(url: str, category: str = "", max_retries: int = 3) -> dict:
                 return data
 
             if response.status_code in (428, 429, 403, 503):
-                wait = (attempt + 1) * 2  # 2s, 4s, 6s
-                print(f"  Status {response.status_code}, retrying in {wait}s: {url}")
+                # Exponential backoff + jitter so two colliding threads
+                # don't retry on the exact same schedule again.
+                base_wait = (attempt + 1) * 3  # 3s, 6s, 9s, 12s
+                wait = base_wait + random.uniform(0.5, 2.5)
+                cf_ray = response.headers.get("cf-ray", "-")
+                retry_after = response.headers.get("Retry-After", "-")
+                print(f"  Status {response.status_code} (cf-ray={cf_ray}, "
+                      f"retry-after={retry_after}), retrying in {wait:.1f}s: {url}")
                 time.sleep(wait)
                 continue
 
@@ -150,6 +196,7 @@ def scrape_single(url: str, category: str = "", max_retries: int = 3) -> dict:
             print(f"  Error URL: {url} -> {e}")
             time.sleep(2)
 
+    print(f"  Giving up after {max_retries} attempts: {url}")
     return {}
 
     
@@ -184,6 +231,8 @@ def run(links_csv: str, output_json: str, workers: int = 5, category: str = ""):
         print("All URLs already scraped!")
         return {"success": 0, "failed": 0}
 
+    warm_up_session()
+
     counters = {"success": 0, "failed": 0}
     lock = threading.Lock()
 
@@ -217,7 +266,8 @@ def run(links_csv: str, output_json: str, workers: int = 5, category: str = ""):
     if failed_urls:
         print(f"\nRetrying {len(failed_urls)} failed URLs...")
         still_failed = []
-        with ThreadPoolExecutor(max_workers=2) as executor:
+        retry_workers = min(workers, 2)  # keep this pass gentle too, no hardcoded 2
+        with ThreadPoolExecutor(max_workers=retry_workers) as executor:
             futures = {executor.submit(scrape_single, url, category): url for url in failed_urls}
             for future in as_completed(futures):
                 url = futures[future]

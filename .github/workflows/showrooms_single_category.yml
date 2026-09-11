@@ -68,6 +68,7 @@ jobs:
     if: needs.detect_showrooms.outputs.total != '0'
     strategy:
       matrix: ${{ fromJson(needs.detect_showrooms.outputs.matrix) }}
+      max-parallel: 1
       fail-fast: false
 
     steps:

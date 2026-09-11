@@ -94,6 +94,7 @@ jobs:
     needs: detect_pages
     strategy:
       matrix: ${{ fromJson(needs.detect_pages.outputs.matrix) }}
+      max-parallel: 1
       fail-fast: false
 
     steps:

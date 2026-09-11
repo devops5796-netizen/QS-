@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from Common_files.request_tracker import tracker
 import Common_files.links_scraper as links_scraper
 import Common_files.products_scraper as products_scraper
+from Common_files.columns_loader import load_all_expected_columns, enforce_columns
 import flatten
 
 load_dotenv()
@@ -14,6 +15,7 @@ LISTING_URL   = "https://qatarsale.com/ar/products/cars_for_sale?basic_search:St
 LISTING_PATH  = "/ar/products/cars_for_sale?basic_search:StatusFilter=0"
 START_PAGE    = 1
 END_PAGE      = 10
+EXPECTED_COLUMNS = load_all_expected_columns()
 
 def filter_yesterday_links(links_csv: str, filtered_csv: str) -> dict:
     df = pd.read_csv(links_csv)
@@ -95,6 +97,9 @@ def main():
         ]
     df = summary["flatten"]["df"]
     df = df.drop(columns=[c for c in COLUMNS_TO_DROP if c in df.columns])
+
+    df = enforce_columns(df, EXPECTED_COLUMNS.get(category, []))
+
     df.to_csv(products_flat_csv, index=False, encoding="utf-8-sig")
 
     elapsed = time.time() - elapsed_start

@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 10
+      max-parallel: 3
       matrix: ${{ fromJson(needs.detect_pages.outputs.matrix) }}
 
     steps:

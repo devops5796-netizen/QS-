@@ -8,6 +8,7 @@ import io
 from Common_files.r2_uploader import upload_buffer
 from datetime import datetime, timezone, timedelta
 from Common_files.request_tracker import tracker
+from Common_files.columns_loader import load_all_expected_columns, enforce_columns
 
 API_URL = "https://production-api.qatarsale.com/api/ApplicantProfile/Search"
 DETAILS_API_URL = "https://production-api.qatarsale.com/api/ApplicantProfile/GetProfileDetails"
@@ -21,6 +22,10 @@ HEADERS = {
     "Referer": "https://qatarsale.com/",
     "Origin": "https://qatarsale.com",
 }
+
+EXPECTED_COLUMNS = load_all_expected_columns()
+_USERS_EXPECTED = EXPECTED_COLUMNS.get("users", [])
+print(f"✅ Loaded {len(_USERS_EXPECTED)} expected columns for users")
 
 
 def get_all_users(start_page: int = 0, end_page: int = None) -> list[dict]:
@@ -256,6 +261,7 @@ def run(output_excel: str = "users.xlsx", start_page: int = 0, end_page: int = N
     print(f"  Total checked: {total_checked} | Yesterday: {total_yesterday}")
 
     df = pd.DataFrame(results)
+    df = enforce_columns(df, _USERS_EXPECTED)
     df.to_excel(output_excel, index=False, sheet_name="users")
     print(f"Saved: {output_excel}")
 

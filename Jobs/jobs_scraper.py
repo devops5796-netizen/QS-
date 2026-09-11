@@ -8,6 +8,7 @@ import io
 from Common_files.r2_uploader import upload_buffer
 import sys
 from Common_files.request_tracker import tracker
+from Common_files.columns_loader import load_all_expected_columns, enforce_columns
 
 API_URL = "https://production-api.qatarsale.com/api/Opportunity/Search"
 DETAILS_API_URL = "https://production-api.qatarsale.com/api/Opportunity/GetOpportunityDetails"
@@ -21,6 +22,10 @@ HEADERS = {
     "Referer": "https://qatarsale.com/",
     "Origin": "https://qatarsale.com",
 }
+
+EXPECTED_COLUMNS = load_all_expected_columns()
+_JOBS_EXPECTED = EXPECTED_COLUMNS.get("jobs", [])
+print(f"✅ Loaded {len(_JOBS_EXPECTED)} expected columns for jobs")
 
 
 def get_all_jobs(start_page: int = 0, end_page: int = None) -> list[dict]:
@@ -230,6 +235,10 @@ def run(output_excel: str = "jobs.xlsx", start_page: int = 0, end_page: int = No
 
     print(f"\nSTEP 3: Saving {len(results)} jobs to Excel...")
     df = pd.DataFrame(results)
+
+    # NEW: enforce expected columns (adds missing ones as None, reorders)
+    df = enforce_columns(df, _JOBS_EXPECTED)
+
     df.to_excel(output_excel, index=False, sheet_name="jobs")
     print(f"Saved: {output_excel}")
 

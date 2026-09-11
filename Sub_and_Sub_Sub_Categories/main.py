@@ -8,8 +8,11 @@ import pandas as pd
 from Common_files.request_tracker import tracker
 import Common_files.links_scraper as links_scraper
 import Common_files.products_scraper as products_scraper
+from Common_files.columns_loader import load_all_expected_columns, enforce_columns
 from dotenv import load_dotenv
 load_dotenv()
+
+EXPECTED_COLUMNS = load_all_expected_columns()
 
 
 def filter_yesterday_links(links_csv: str, filtered_csv: str) -> dict:
@@ -108,7 +111,7 @@ def run_category_pages(category: str, category_path: str, start: int, end: int):
         print("="*60)
         return None
 
-    s2 = products_scraper.run(filtered_csv, products_json, workers=2, category=category)
+    s2 = products_scraper.run(filtered_csv, products_json, workers=1, category=category)
     if s2['success'] == 0:
         print(f"⚠️ No products scraped for '{category}' — skipping.")
         return None
@@ -127,6 +130,9 @@ def run_category_pages(category: str, category_path: str, start: int, end: int):
             "isFavourite", "returnOriginalImages", "originalImages"
         ]
     df = df.drop(columns=[c for c in COLUMNS_TO_DROP if c in df.columns])
+
+    expected = EXPECTED_COLUMNS.get(category, [])
+    df = enforce_columns(df, expected) 
 
     output_files = []
 

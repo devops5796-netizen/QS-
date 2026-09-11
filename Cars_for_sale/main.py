@@ -88,7 +88,7 @@ def main():
 
         return
     
-    summary["products"] = products_scraper.run(filtered_csv, products_json, workers=2, category=category)
+    summary["products"] = products_scraper.run(filtered_csv, products_json, workers=1, category=category)
     summary["flatten"]  = flatten.run(products_json, products_flat_csv)
     COLUMNS_TO_DROP = [
             "categoryId", "categoryName", "_CategoryPath", "categoryUri", "createdBy", "thumbnailImages",

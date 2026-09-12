@@ -2702,7 +2702,6 @@ _col_showrooms_cars_for_sale_listing: &col_showrooms_cars_for_sale_listing
   - product_url
   - showroomUri
   - startDate
-  - status
   - uri
   - url
   - views_count

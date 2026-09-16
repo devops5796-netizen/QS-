@@ -60,7 +60,8 @@ jobs:
               "stamps":                        "https://qatarsale.com/ar/products/stamps?basic_search:StatusFilter=0",
               "inflatable_games":              "https://qatarsale.com/ar/products/inflatable_games?basic_search:StatusFilter=0",
               "porta_cabin":                   "https://qatarsale.com/ar/products/porta_cabin?basic_search:StatusFilter=0",
-              "fishing_equipment":             "https://qatarsale.com/ar/products/fishing_equipment?basic_search:StatusFilter=0"
+              "fishing_equipment":             "https://qatarsale.com/ar/products/fishing_equipment?basic_search:StatusFilter=0",
+              "scanners":                      "https://qatarsale.com/ar/products/scanners?basic_search:StatusFilter=0",
           }
 
           JOBS_PER_CATEGORY = {cat: 20 for cat in CATEGORIES}
@@ -158,7 +159,7 @@ jobs:
                    cashier_machines, elevators, generators, building_materials, 
                    shaving_hair_removal_products, metal_detector, aquariums, business_industrial, 
                    pumps, walkie_talkie, glasses, safe_boxes, tracking_systems, pet_accessories, 
-                   stamps, inflatable_games, porta_cabin, fishing_equipment]
+                   stamps, inflatable_games, porta_cabin, fishing_equipment, scanners]
 
     steps:
       - name: Checkout repo

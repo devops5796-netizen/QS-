@@ -62,6 +62,8 @@ CATEGORIES = {
         "https://qatarsale.com/ar/products/porta_cabin?basic_search:StatusFilter=0",
     "fishing_equipment":
         "https://qatarsale.com/ar/products/fishing_equipment?basic_search:StatusFilter=0",
+    "scanners":
+            "https://qatarsale.com/ar/products/scanners?basic_search:StatusFilter=0",
 }
 
 EXPECTED_COLUMNS = load_all_expected_columns()

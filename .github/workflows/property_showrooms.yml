@@ -1,0 +1,349 @@
+name: Property Showrooms
+
+on:
+  workflow_run:
+    workflows: ["Showrooms"]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  detect_showrooms:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.build_matrix.outputs.matrix }}
+      total:  ${{ steps.build_matrix.outputs.total }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests pandas openpyxl
+
+      - name: Detect showrooms and build matrix
+        id: build_matrix
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python << 'EOF'
+          import json, os
+          from Showrooms.property_showroom_parser import get_showroom_links
+
+          showrooms = get_showroom_links()
+          total     = len(showrooms)
+
+          matrix = {"include": []}
+
+          if total == 0:
+              print("❌ No showrooms found, skipping")
+              matrix = {"include": [{"index": 0, "url": "none", "name": "none"}]}
+          else:
+              for i, url in enumerate(showrooms):
+                  name = (
+                      url.split("/ar/showroom/")[-1].split("/")[0]
+                      if "/ar/showroom/" in url
+                      else f"showroom_{i}"
+                  )
+                  matrix["include"].append({"index": i, "url": url, "name": name})
+
+          print(f"📊 [property] Total jobs: {len(matrix['include'])}")
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"matrix={json.dumps(matrix)}\n")
+              f.write(f"total={total}\n")
+          EOF
+
+  scrape_showrooms:
+    runs-on: ubuntu-latest
+    needs: detect_showrooms
+    if: needs.detect_showrooms.outputs.total != '0'
+    strategy:
+      matrix: ${{ fromJson(needs.detect_showrooms.outputs.matrix) }}
+      max-parallel: 1
+      fail-fast: false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-property-showrooms-${{ hashFiles('Common_files/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          pip install -r Common_files/requirements.txt
+          pip install requests openpyxl
+
+      - name: Run property showroom scraper
+        env:
+          CF_R2_ACCESS_KEY_ID:     ${{ secrets.CF_R2_ACCESS_KEY_ID }}
+          CF_R2_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
+          CF_R2_ENDPOINT_URL:      ${{ secrets.CF_R2_ENDPOINT_URL }}
+          CF_R2_BUCKET_NAME:       ${{ secrets.CF_R2_BUCKET_NAME }}
+        run: |
+          echo "🔄 [property] Showroom ${{ matrix.index }}: ${{ matrix.name }}"
+          echo "URL: ${{ matrix.url }}"
+          export PYTHONPATH=$PWD
+          python -u Showrooms/property_showroom_main.py "${{ matrix.url }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: property-showroom-${{ matrix.index }}-${{ matrix.name }}
+          path: |
+            showroom_*.xlsx
+            *_failed.txt
+            request_stats_*.json
+          if-no-files-found: ignore
+
+  merge_showrooms:
+    runs-on: ubuntu-latest
+    needs: scrape_showrooms
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas openpyxl boto3 python-dotenv
+
+      - name: Get workflow start time
+        id: workflow_start
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          STARTED_AT=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }} --jq .run_started_at)
+          START_TIMESTAMP=$(date -d "$STARTED_AT" +%s)
+          echo "start_time=$START_TIMESTAMP" >> "$GITHUB_OUTPUT"
+          echo "Workflow started at: $STARTED_AT (timestamp: $START_TIMESTAMP)"
+
+      - name: Download all showroom artifacts
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: property-showroom-*
+          merge-multiple: true
+          path: showroom_parts/
+
+      - name: Merge and upload to R2
+        env:
+          CF_R2_ACCESS_KEY_ID:     ${{ secrets.CF_R2_ACCESS_KEY_ID }}
+          CF_R2_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
+          CF_R2_ENDPOINT_URL:      ${{ secrets.CF_R2_ENDPOINT_URL }}
+          CF_R2_BUCKET_NAME:       ${{ secrets.CF_R2_BUCKET_NAME }}
+          WORKFLOW_START_TIME: ${{ steps.workflow_start.outputs.start_time }}
+        run: |
+          python << 'EOF'
+          import pandas as pd
+          import glob, os, boto3, json, time, sys
+          from datetime import datetime, timezone, timedelta
+          from Common_files.monitor_helpers import collect_failed_links
+
+          category = "property"
+
+          workflow_start_time = os.getenv("WORKFLOW_START_TIME")
+          workflow_duration = None
+          if workflow_start_time:
+              try:
+                  start_ts = float(workflow_start_time)
+                  now_ts = time.time()
+                  workflow_duration = round(now_ts - start_ts, 2)
+                  print(f"✅ Full workflow duration: {workflow_duration}s")
+              except (ValueError, TypeError):
+                  print("⚠️ Warning: Could not parse WORKFLOW_START_TIME")
+
+          data_date = datetime.now(timezone.utc)
+          dt = datetime.now(timezone.utc)
+
+          base_path = f"qatarsale/year={data_date.year}/month={data_date.strftime('%m')}/day={data_date.strftime('%d')}/showrooms_{category}"
+
+          excel_files = glob.glob("showroom_parts/showroom_*.xlsx")
+          print(f"Found {len(excel_files)} Excel files")
+
+          # ── EXIT EARLY: no files at all ──────────────────────────────
+          if not excel_files:
+              print("❌ No data collected at all. Nothing to upload.")
+              sys.exit(0)
+
+          bucket = os.environ["CF_R2_BUCKET_NAME"]
+          client = boto3.client(
+              "s3",
+              endpoint_url          = os.environ["CF_R2_ENDPOINT_URL"],
+              aws_access_key_id     = os.environ["CF_R2_ACCESS_KEY_ID"],
+              aws_secret_access_key = os.environ["CF_R2_SECRET_ACCESS_KEY"],
+              region_name           = "auto",
+          )
+
+          empty_showrooms = []
+          valid_sheets_data = []
+          all_data = []
+
+          # ── Phase 1: Read & filter ─────────────────────────────────
+          for f in excel_files:
+              try:
+                  base_name  = os.path.basename(f)
+                  sheet_name = base_name.replace("showroom_", "").replace(".xlsx", "")[:31]
+                  df         = pd.read_excel(f, sheet_name=0)
+
+                  is_empty_marker = (
+                      len(df) == 1
+                      and "status" in df.columns
+                      and str(df["status"].iloc[0]) == "empty - no products found"
+                  )
+
+                  if df.empty or is_empty_marker:
+                      empty_showrooms.append(sheet_name)
+                      print(f"  ⚠ EMPTY: {sheet_name}")
+                      continue
+
+                  valid_sheets_data.append((sheet_name, df))
+                  print(f"  ✓ {sheet_name}: {len(df)} rows")
+
+              except Exception as e:
+                  sheet_name = os.path.basename(f).replace("showroom_", "").replace(".xlsx", "")[:31]
+                  print(f"  ✗ FAILED: {sheet_name} — {e}")
+
+          # ── EXIT EARLY: all files were empty ─────────────────────────
+          if not valid_sheets_data:
+              print("❌ All showrooms are empty. Nothing to upload.")
+              sys.exit(0)
+
+          # ── Phase 2: Build Excel ──────────────────────────────────
+          success_sheets = []
+          writer = pd.ExcelWriter("all_showrooms.xlsx", engine="openpyxl")
+
+          for sheet_name, df in valid_sheets_data:
+              original = sheet_name
+              counter  = 1
+              while sheet_name in writer.sheets:
+                  sheet_name = f"{original}_{counter}"
+                  counter   += 1
+
+              df.to_excel(writer, sheet_name=sheet_name, index=False)
+              success_sheets.append({"name": sheet_name, "rows": len(df)})
+              print(f"  ✓ Written sheet '{sheet_name}': {len(df)} rows")
+
+              sheet_data = df.to_dict(orient='records')
+              for record in sheet_data:
+                  record['showroom'] = sheet_name
+              all_data.extend(sheet_data)
+
+          writer.close()
+
+          # Upload Excel
+          excel_key = f"{base_path}/excel/all_showrooms.xlsx"
+          client.upload_file("all_showrooms.xlsx", bucket, excel_key,
+              ExtraArgs={"ContentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"})
+          print(f"✅ Uploaded: {excel_key}")
+
+          # Upload JSON
+          json_file = "all_showrooms.json"
+          with open(json_file, 'w', encoding='utf-8') as f:
+              json.dump(all_data, f, ensure_ascii=False, indent=2)
+
+          json_key = f"{base_path}/json/all_showrooms.json"
+          client.upload_file(json_file, bucket, json_key,
+              ExtraArgs={"ContentType": "application/json; charset=utf-8"})
+          print(f"✅ Uploaded: {json_key}")
+
+          # Build summary
+          failed_links = collect_failed_links('showroom_parts/*_failed.txt')
+          total_failed = len(failed_links)
+
+          stats_files = glob.glob('showroom_parts/request_stats_*.json')
+          total_requests = 0
+          requests_duration_sec = 0.0
+          per_source = {}
+
+          for sf in stats_files:
+              with open(sf, 'r', encoding='utf-8') as f:
+                  stats = json.load(f)
+              total_requests += stats.get('total_requests', 0)
+              duration_min = stats.get('total_duration_min', 0)
+              if duration_min:
+                  requests_duration_sec = max(requests_duration_sec, duration_min * 60)
+              for source, count in stats.get('per_source', {}).items():
+                  per_source[source] = per_source.get(source, 0) + count
+
+          error_rate_pct = round(total_failed / total_requests * 100, 2) if total_requests > 0 else None
+          requests_per_min = round(total_requests / (requests_duration_sec / 60.0), 2) if requests_duration_sec > 0 else None
+
+          failed_items = []
+          for url in failed_links:
+              failed_items.append({
+                  "name": url,
+                  "errors": 1,
+                  "detail": "Failed to scrape"
+              })
+
+          summary = {
+              "scraped_at": dt.isoformat(),
+              "data_scraped_date": (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+              "saved_to_R2_date": data_date.strftime("%Y-%m-%d"),
+              "category": {
+                  "name_ar": "",
+                  "name_en": "Showrooms property",
+                  "slug": "showrooms_property"
+              },
+              "workflow_name": "showrooms_property",
+              "total_subcategories": len(success_sheets),
+              "total_listings": len(all_data),
+              "subcategories": [
+                  {
+                      "name_ar": "",
+                      "name_en": s["name"],
+                      "slug": s["name"],
+                      "listings_count": s["rows"],
+                      "has_subcategories": False,
+                      "subcategories": [],
+                  }
+                  for s in success_sheets
+              ],
+              "request_metrics": {
+                  "requests_total": total_requests,
+                  "requests_failed": total_failed,
+                  "error_rate_pct": error_rate_pct,
+                  "duration_sec": workflow_duration,
+                  "requests_duration_sec": requests_duration_sec,
+                  "requests_per_min": requests_per_min,
+                  "per_source": per_source
+              },
+              "failed_items": failed_items,
+              "failed_items_summary": "; ".join([f"{f['name']}: 1 error" for f in failed_items[:5]]) if failed_items else None
+          }
+
+          with open("summary.json", "w", encoding="utf-8") as f:
+              json.dump(summary, f, ensure_ascii=False, indent=2)
+
+          summary_key = f"{base_path}/summary/summary.json"
+          client.upload_file("summary.json", bucket, summary_key,
+              ExtraArgs={"ContentType": "application/json; charset=utf-8"})
+          print(f"✅ Uploaded: {summary_key}")
+          print(f"  - {summary['total_subcategories']} showrooms, {summary['total_listings']} listings")
+          print(f"  - requests: {summary['request_metrics']['requests_total']} total, {summary['request_metrics']['requests_failed']} failed")
+          print(f"  - duration: {summary['request_metrics']['duration_sec']}s")
+          print(f"  - RPM: {summary['request_metrics']['requests_per_min']}")
+
+          EOF

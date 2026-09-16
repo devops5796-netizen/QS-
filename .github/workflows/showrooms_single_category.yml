@@ -35,7 +35,7 @@ jobs:
         run: |
           python << 'EOF'
           import json, os
-          from Showrooms.showroom_parser import get_showroom_links
+          from Showrooms_Cars.showroom_parser import get_showroom_links
 
           category  = os.environ["CATEGORY"]
           showrooms = get_showroom_links(category)
@@ -103,7 +103,7 @@ jobs:
           echo "🔄 [${{ inputs.category }}] Showroom ${{ matrix.index }}: ${{ matrix.name }}"
           echo "URL: ${{ matrix.url }}"
           export PYTHONPATH=$PWD
-          python -u Showrooms/showroom_main.py "${{ matrix.url }}" "${{ inputs.category }}"
+          python -u Showrooms_Cars/showroom_main.py "${{ matrix.url }}" "${{ inputs.category }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

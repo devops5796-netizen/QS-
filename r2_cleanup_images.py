@@ -20,11 +20,11 @@ deletes/modifies anything for real.
 Requirements:
     pip install boto3 openpyxl
 
-Environment variables expected (fill these in / export them before running):
-    R2_ACCOUNT_ID
-    R2_ACCESS_KEY_ID
-    R2_SECRET_ACCESS_KEY
-    R2_BUCKET_NAME
+Environment variables expected (matches the existing pipeline's secret names):
+    CF_R2_ACCESS_KEY_ID
+    CF_R2_SECRET_ACCESS_KEY
+    CF_R2_ENDPOINT_URL
+    CF_R2_BUCKET_NAME
 """
 
 import argparse
@@ -49,12 +49,11 @@ DATE_PREFIX_RE = re.compile(r"^year=\d{4}/month=\d{2}/day=\d{2}/$")
 
 
 def get_client():
-    account_id = os.environ["R2_ACCOUNT_ID"]
     return boto3.client(
         "s3",
-        endpoint_url=f"https://{account_id}.r2.cloudflarestorage.com",
-        aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
-        aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
+        endpoint_url=os.environ["CF_R2_ENDPOINT_URL"],
+        aws_access_key_id=os.environ["CF_R2_ACCESS_KEY_ID"],
+        aws_secret_access_key=os.environ["CF_R2_SECRET_ACCESS_KEY"],
         config=Config(signature_version="s3v4"),
         region_name="auto",
     )
@@ -208,7 +207,7 @@ def main():
                          help="Only process one date, e.g. year=2026/month=09/day=01/")
     args = parser.parse_args()
 
-    bucket = os.environ["R2_BUCKET_NAME"]
+    bucket = os.environ["CF_R2_BUCKET_NAME"]
     s3 = get_client()
 
     if args.date:

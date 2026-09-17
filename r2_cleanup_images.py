@@ -1,18 +1,28 @@
 """
-QatarSale R2 cleanup script
-============================
-- Walks ALL dates under a base prefix (default: qatarsale/) on Cloudflare R2.
-- For every category found under each date, it:
+R2 cleanup script (QatarSale / DKSA / any Hive-partitioned pipeline)
+=====================================================================
+- Walks ALL dates under a base prefix (default: DKSA/) on Cloudflare R2.
+- Categories can be nested to ANY depth (e.g. DKSA has flat categories
+  like "electronics-home-appliances/" AND grouping folders like
+  "agent-agency/" or "vehicles/" that contain their own sub-categories).
+  A folder is treated as a real ("leaf") category once it directly
+  contains an "excel/" subfolder; anything else is walked deeper.
+- For every leaf category found under each date (except any name listed
+  in --skip-categories), it:
     1. Deletes everything inside that category's "images/" subfolder.
     2. Opens every Excel file under "excel/" (every sheet) and drops any
        column whose header matches one of the known image-reference columns.
     3. Opens every JSON file under "json/" and removes those same keys
        from every record.
+  Categories in --skip-categories (default: vip-car-plates) are left
+  completely untouched — no images deleted, no columns stripped.
 
 Known image-reference column/key names (case-insensitive, any category):
     - images_local_paths
     - image_r2_key
     - r2_image
+    - image_r2_paths
+    - images
 
 Run with --dry-run first to see exactly what would be touched before it
 deletes/modifies anything for real.
@@ -42,8 +52,16 @@ import openpyxl
 # Config
 # ---------------------------------------------------------------------------
 
-BASE_PREFIX = "qatarsale/"           # e.g. qatarsale/year=2026/month=09/day=01/
-TARGET_COLUMNS = {"images_local_paths", "image_r2_key", "r2_image"}
+BASE_PREFIX = "DKSA/"                # e.g. DKSA/year=2026/month=08/day=19/  (override with --base-prefix)
+TARGET_COLUMNS = {
+    "images_local_paths",
+    "image_r2_key",
+    "r2_image",
+    "image_r2_paths",
+    "images",
+}
+SKIP_CATEGORY_NAMES = {"vip-car-plates"}   # never touched at all (override with --skip-categories)
+LEAF_SIGNAL = "excel/"               # a folder containing this is a real category, not a grouping folder
 
 DATE_PREFIX_RE = re.compile(r"^year=\d{4}/month=\d{2}/day=\d{2}/$")
 
@@ -69,14 +87,29 @@ def list_common_prefixes(s3, bucket, prefix):
     return prefixes
 
 
-def list_all_date_prefixes(s3, bucket):
-    """qatarsale/year=YYYY/month=MM/day=DD/ for every date that exists."""
+def list_all_date_prefixes(s3, bucket, base_prefix):
+    """<base_prefix>year=YYYY/month=MM/day=DD/ for every date that exists."""
     date_prefixes = []
-    for year_prefix in list_common_prefixes(s3, bucket, BASE_PREFIX):
+    for year_prefix in list_common_prefixes(s3, bucket, base_prefix):
         for month_prefix in list_common_prefixes(s3, bucket, year_prefix):
             for day_prefix in list_common_prefixes(s3, bucket, month_prefix):
                 date_prefixes.append(day_prefix)
     return sorted(date_prefixes)
+
+
+def find_leaf_category_prefixes(s3, bucket, prefix):
+    """Recursively descend into folders until we hit ones that directly
+    contain an 'excel/' subfolder — those are real categories. Grouping
+    folders (like 'agent-agency/' or 'vehicles/') get walked deeper
+    instead of being treated as categories themselves."""
+    sub_prefixes = list_common_prefixes(s3, bucket, prefix)
+    names = {p[len(prefix):] for p in sub_prefixes}
+    if LEAF_SIGNAL in names:
+        return [prefix]
+    leaves = []
+    for sub in sub_prefixes:
+        leaves.extend(find_leaf_category_prefixes(s3, bucket, sub))
+    return leaves
 
 
 def list_all_objects(s3, bucket, prefix):
@@ -177,8 +210,13 @@ def clean_json_object(s3, bucket, key, dry_run):
     return changed
 
 
-def process_category(s3, bucket, category_prefix, dry_run):
+def process_category(s3, bucket, category_prefix, dry_run, skip_names):
     category_name = category_prefix.rstrip("/").split("/")[-1]
+
+    if category_name in skip_names:
+        print(f"  Category: {category_name}  -> SKIPPED (protected, not touched)")
+        return
+
     print(f"  Category: {category_name}")
 
     # 1) delete images/ subfolder entirely
@@ -204,25 +242,34 @@ def main():
     parser.add_argument("--dry-run", action="store_true",
                          help="Show what would be deleted/changed without touching R2")
     parser.add_argument("--date", default=None,
-                         help="Only process one date, e.g. year=2026/month=09/day=01/")
+                         help="Only process one date, e.g. year=2026/month=08/day=19/")
+    parser.add_argument("--base-prefix", default=BASE_PREFIX,
+                         help=f"Base prefix on the bucket (default: {BASE_PREFIX})")
+    parser.add_argument("--skip-categories", default=",".join(sorted(SKIP_CATEGORY_NAMES)),
+                         help="Comma-separated category names to never touch "
+                              f"(default: {','.join(sorted(SKIP_CATEGORY_NAMES))})")
     args = parser.parse_args()
+
+    base_prefix = args.base_prefix if args.base_prefix.endswith("/") else args.base_prefix + "/"
+    skip_names = {n.strip() for n in args.skip_categories.split(",") if n.strip()}
 
     bucket = os.environ["CF_R2_BUCKET_NAME"]
     s3 = get_client()
 
     if args.date:
-        date_prefixes = [BASE_PREFIX + args.date.rstrip("/") + "/"]
+        date_prefixes = [base_prefix + args.date.rstrip("/") + "/"]
     else:
-        date_prefixes = list_all_date_prefixes(s3, bucket)
+        date_prefixes = list_all_date_prefixes(s3, bucket, base_prefix)
 
     print(f"Found {len(date_prefixes)} date(s) to process."
-          f"{' [DRY RUN]' if args.dry_run else ''}")
+          f"{' [DRY RUN]' if args.dry_run else ''}"
+          f"  (skipping categories: {', '.join(sorted(skip_names)) or 'none'})")
 
     for date_prefix in date_prefixes:
         print(f"\n{'=' * 70}\n📅 {date_prefix}\n{'=' * 70}")
-        category_prefixes = list_common_prefixes(s3, bucket, date_prefix)
-        for category_prefix in category_prefixes:
-            process_category(s3, bucket, category_prefix, args.dry_run)
+        leaf_category_prefixes = find_leaf_category_prefixes(s3, bucket, date_prefix)
+        for category_prefix in leaf_category_prefixes:
+            process_category(s3, bucket, category_prefix, args.dry_run, skip_names)
 
     print("\nDone." + (" (dry run — nothing was actually changed)" if args.dry_run else ""))
 

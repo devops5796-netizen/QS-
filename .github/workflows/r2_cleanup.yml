@@ -1,7 +1,7 @@
-name: QatarSale R2 Cleanup
+name: R2 Cleanup (images + columns)
 
-# Manual trigger only — you choose dry-run and (optionally) a single date
-# each time you run it from the Actions tab.
+# Manual trigger only — you choose dry-run, base prefix, date, and which
+# category names to skip, each time you run it from the Actions tab.
 on:
   workflow_dispatch:
     inputs:
@@ -10,11 +10,21 @@ on:
         required: true
         type: boolean
         default: true
+      base_prefix:
+        description: "Base prefix on the bucket, e.g. DKSA/ or qatarsale/"
+        required: true
+        type: string
+        default: "DKSA/"
       date:
-        description: "Optional single date, e.g. year=2026/month=09/day=01/  (leave empty = ALL dates)"
+        description: "Optional single date, e.g. year=2026/month=08/day=19/  (leave empty = ALL dates)"
         required: false
         type: string
         default: ""
+      skip_categories:
+        description: "Comma-separated category names to never touch"
+        required: false
+        type: string
+        default: "vip-car-plates"
 
 jobs:
   cleanup:
@@ -38,12 +48,15 @@ jobs:
           CF_R2_ENDPOINT_URL: ${{ secrets.CF_R2_ENDPOINT_URL }}
           CF_R2_BUCKET_NAME: ${{ secrets.CF_R2_BUCKET_NAME }}
         run: |
-          ARGS=""
+          ARGS="--base-prefix ${{ inputs.base_prefix }}"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             ARGS="$ARGS --dry-run"
           fi
           if [ -n "${{ inputs.date }}" ]; then
             ARGS="$ARGS --date ${{ inputs.date }}"
+          fi
+          if [ -n "${{ inputs.skip_categories }}" ]; then
+            ARGS="$ARGS --skip-categories ${{ inputs.skip_categories }}"
           fi
           echo "Running: python r2_cleanup_images.py $ARGS"
           python r2_cleanup_images.py $ARGS

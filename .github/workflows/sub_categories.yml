@@ -34,20 +34,14 @@ jobs:
           from Common_files.detect_utils import analyze_category_with_products
 
           MULTI_CATEGORIES = {
-                "car_spare_parts_accessories-automotive_exterior_accessories":
-                    "https://qatarsale.com/ar/products/car_spare_parts_accessories-automotive_exterior_accessories?basic_search:StatusFilter=0",
                 "heavy_equipments":
                     "https://qatarsale.com/ar/products/heavy_equipments?basic_search:StatusFilter=0",
-                "car_spare_parts_accessories":
-                    "https://qatarsale.com/ar/products/car_spare_parts_accessories?basic_search:StatusFilter=0",
                 "jewellery":
                     "https://qatarsale.com/ar/products/jewellery?basic_search:StatusFilter=0",
                 "property":
                     "https://qatarsale.com/ar/products/property?basic_search:StatusFilter=0",
                 "watercrafts":
                     "https://qatarsale.com/ar/products/watercrafts?basic_search:StatusFilter=0",
-                "computers_and_parts":
-                    "https://qatarsale.com/ar/products/computers_and_parts?basic_search:StatusFilter=0",
                 "video_games":
                     "https://qatarsale.com/ar/products/video_games?basic_search:StatusFilter=0",
                 "wrist_watches":
@@ -184,13 +178,10 @@ jobs:
     strategy:
       matrix:
         category:
-          - car_spare_parts_accessories-automotive_exterior_accessories
           - heavy_equipments
-          - car_spare_parts_accessories
           - jewellery
           - property
           - watercrafts
-          - computers_and_parts
           - video_games
           - wrist_watches
           - home_security_surveillance_systems

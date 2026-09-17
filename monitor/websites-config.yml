@@ -95,6 +95,12 @@ scrapers:
     batch: "simple_categories"
     workflow_file: simple_categories.yml
     r2_path: "{r2_bucket}/qatarsale/shaving_hair_removal_products"
+
+  - name: scanners
+    url: https://qatarsale.com/ar/products/scanners
+    batch: "simple_categories"
+    workflow_file: simple_categories.yml
+    r2_path: "{r2_bucket}/qatarsale/scanners"
   
   - name: metal_detector
     url: https://qatarsale.com/ar/products/metal_detector
@@ -174,12 +180,6 @@ scrapers:
     workflow_file: simple_categories.yml
     r2_path: "{r2_bucket}/qatarsale/fishing_equipment"
 
-  - name: car_spare_parts_accessories-automotive_exterior_accessories
-    url: https://qatarsale.com/ar/products/car_spare_parts_accessories-automotive_exterior_accessories
-    batch: "sub_categories"
-    workflow_file: sub_categories.yml
-    r2_path: "{r2_bucket}/qatarsale/car_spare_parts_accessories-automotive_exterior_accessories"
-  
   - name: heavy_equipments
     url: https://qatarsale.com/ar/products/heavy_equipments
     batch: "sub_categories"
@@ -209,12 +209,6 @@ scrapers:
     batch: "sub_categories"
     workflow_file: sub_categories.yml
     r2_path: "{r2_bucket}/qatarsale/watercrafts"
-
-  - name: computers_and_parts
-    url: https://qatarsale.com/ar/products/computers_and_parts
-    batch: "sub_categories"
-    workflow_file: sub_categories.yml
-    r2_path: "{r2_bucket}/qatarsale/computers_and_parts"
   
   - name: video_games
     url: https://qatarsale.com/ar/products/video_games
@@ -335,12 +329,6 @@ scrapers:
     batch: "sub_sub_categories"
     workflow_file: sub_sub_categories.yml
     r2_path: "{r2_bucket}/qatarsale/services"
-  
-  - name: mobile_telephone_and_tablets
-    url: https://qatarsale.com/ar/products/mobile_telephone_and_tablets
-    batch: "sub_sub_categories"
-    workflow_file: sub_sub_categories.yml
-    r2_path: "{r2_bucket}/qatarsale/mobile_telephone_and_tablets"
   
   - name: furniture_dcor
     url: https://qatarsale.com/ar/products/furniture_dcor
@@ -1184,90 +1172,6 @@ _col_clothes_listing: &col_clothes_listing
   - platform
   - product_url
   - promotedFee
-  - specs
-  - specs_*
-  - startDate
-  - startingPrice
-  - status
-  - tag
-  - timeAgo
-  - title
-  - type
-  - uri
-  - userCode
-  - viewCount
-  - whatsapps
-
-_col_computers_and_parts_listing: &col_computers_and_parts_listing
-  - advertisedFor
-  - arDesc
-  - bidRate
-  - buyNowAmount
-  - canComplain
-  - categoryPath
-  - condition
-  - createdAt
-  - currentDate
-  - desc
-  - duration
-  - durationIndex
-  - enDesc
-  - enUrl
-  - endDate
-  - endStatus
-  - fansCount
-  - fee
-  - forView
-  - has360
-  - hasActiveVersion
-  - hasCoverImages
-  - hasLive
-  - hasPdf
-  - hasPendingPrice
-  - hasPendingUpdate
-  - id
-  - images
-  - imagesCount
-  - inStudio
-  - isActive
-  - isActiveCategory
-  - isBusiness
-  - isBuyNow
-  - isDeleted
-  - isDemo
-  - isExpired
-  - isHasMore
-  - isLocked
-  - isMyWinner
-  - isPinned
-  - isPinnedToShowroom
-  - isPromoted
-  - isSaved
-  - isService
-  - isSold
-  - isStarted
-  - isUpdated
-  - isWon
-  - language
-  - liveURL
-  - location
-  - moveUpFee
-  - neededCredit
-  - oldPrice
-  - owner
-  - ownerId
-  - ownerPhoneNumber
-  - pdfUrl
-  - phones
-  - pinFee
-  - platform
-  - product_url
-  - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
-  - soldDate
   - specs
   - specs_*
   - startDate
@@ -2178,90 +2082,6 @@ _col_men_accessories_listing: &col_men_accessories_listing
   - platform
   - product_url
   - promotedFee
-  - specs
-  - specs_*
-  - startDate
-  - startingPrice
-  - status
-  - tag
-  - timeAgo
-  - title
-  - type
-  - uri
-  - userCode
-  - viewCount
-  - whatsapps
-
-_col_mobile_telephone_and_tablets_listing: &col_mobile_telephone_and_tablets_listing
-  - advertisedFor
-  - arDesc
-  - bidRate
-  - buyNowAmount
-  - canComplain
-  - categoryPath
-  - condition
-  - createdAt
-  - currentDate
-  - desc
-  - duration
-  - durationIndex
-  - enDesc
-  - enUrl
-  - endDate
-  - endStatus
-  - fansCount
-  - fee
-  - forView
-  - has360
-  - hasActiveVersion
-  - hasCoverImages
-  - hasLive
-  - hasPdf
-  - hasPendingPrice
-  - hasPendingUpdate
-  - id
-  - images
-  - imagesCount
-  - inStudio
-  - isActive
-  - isActiveCategory
-  - isBusiness
-  - isBuyNow
-  - isDeleted
-  - isDemo
-  - isExpired
-  - isHasMore
-  - isLocked
-  - isMyWinner
-  - isPinned
-  - isPinnedToShowroom
-  - isPromoted
-  - isSaved
-  - isService
-  - isSold
-  - isStarted
-  - isUpdated
-  - isWon
-  - language
-  - liveURL
-  - location
-  - moveUpFee
-  - neededCredit
-  - oldPrice
-  - owner
-  - ownerId
-  - ownerPhoneNumber
-  - pdfUrl
-  - phones
-  - pinFee
-  - platform
-  - product_url
-  - promotedFee
-  - showroomId
-  - showroomIsHidden
-  - showroomName
-  - showroomUri
-  - soldDate
   - specs
   - specs_*
   - startDate
@@ -4679,6 +4499,14 @@ excel_schema:
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
+  - scraper: scanners
+    excel_file_pattern: "{category_slug}.xlsx"
+    sheets:
+      - name: "{child_category or Main}"
+        required_columns: *col_default_listing
+        row_count_range: [1, 100]
+    min_file_size_kb: 5
+
   - scraper: metal_detector
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
@@ -4783,14 +4611,6 @@ excel_schema:
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
-  - scraper: car_spare_parts_accessories-automotive_exterior_accessories
-    excel_file_pattern: "{category_slug}.xlsx"
-    sheets:
-      - name: "{child_category or Main}"
-        required_columns: *col_car_spare_parts_accessories_listing
-        row_count_range: [1, 100]
-    min_file_size_kb: 5
-
   - scraper: heavy_equipments
     excel_file_pattern: "{category_slug}.xlsx"
     sheets:
@@ -4828,14 +4648,6 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_watercrafts_listing
-        row_count_range: [1, 100]
-    min_file_size_kb: 5
-
-  - scraper: computers_and_parts
-    excel_file_pattern: "{category_slug}.xlsx"
-    sheets:
-      - name: "{child_category or Main}"
-        required_columns: *col_computers_and_parts_listing
         row_count_range: [1, 100]
     min_file_size_kb: 5
   
@@ -4999,14 +4811,6 @@ excel_schema:
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
-  - scraper: mobile_telephone_and_tablets
-    excel_file_pattern: "{subcategory_slug}.xlsx"
-    sheets:
-      - name: "{child_category or Main}"
-        required_columns: *col_mobile_telephone_and_tablets_listing
-        row_count_range: [1, 100]
-    min_file_size_kb: 5
-
   - scraper: furniture_dcor
     excel_file_pattern: "{subcategory_slug}.xlsx"
     sheets:
@@ -5089,6 +4893,7 @@ alert_thresholds:
     generators: 3
     building_materials: 3
     shaving_hair_removal_products: 3
+    scanners: 3
     metal_detector: 3
     aquariums: 3
     business_industrial: 3
@@ -5102,13 +4907,11 @@ alert_thresholds:
     inflatable_games: 3
     porta_cabin: 3
     fishing_equipment: 3
-    car_spare_parts_accessories-automotive_exterior_accessories: 3
     heavy_equipments: 3
     car_spare_parts_accessories: 3
     jewellery: 3
     property: 3
     watercrafts: 3
-    computers_and_parts: 3
     video_games: 3
     wrist_watches: 3
     home_security_surveillance_systems: 3
@@ -5129,7 +4932,6 @@ alert_thresholds:
     special_numbers: 3
     services: 3
     home_appliances: 3
-    mobile_telephone_and_tablets: 3
     furniture_dcor: 3
     electronics: 3
     sportswear_equipment: 3

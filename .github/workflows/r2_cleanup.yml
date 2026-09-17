@@ -11,12 +11,12 @@ on:
         type: boolean
         default: true
       base_prefix:
-        description: "Base prefix on the bucket, e.g. DKSA/ or qatarsale/"
+        description: "Base prefix on the bucket, e.g. DOMAN/ or DKSA/ or qatarsale/"
         required: true
         type: string
-        default: "DKSA/"
+        default: "DOMAN/"
       date:
-        description: "Optional single date, e.g. year=2026/month=08/day=19/  (leave empty = ALL dates)"
+        description: "Optional single date, e.g. year=2026/month=08/day=27/  (leave empty = ALL dates)"
         required: false
         type: string
         default: ""
@@ -24,7 +24,7 @@ on:
         description: "Comma-separated category names to never touch"
         required: false
         type: string
-        default: "vip-car-plates"
+        default: "vip-car-plates,services,land-for-sale"
 
 jobs:
   cleanup:

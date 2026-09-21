@@ -1,7 +1,7 @@
 import sys
 import time
 import pandas as pd
-import property_showroom_parser as showroom_parser
+import showroom_parser as showroom_parser
 from PIL import Image
 import pandas as pd
 import requests as req

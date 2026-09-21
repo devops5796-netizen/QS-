@@ -34,7 +34,7 @@ jobs:
         run: |
           python << 'EOF'
           import json, os
-          from Showrooms.property_showroom_parser import get_showroom_links
+          from Showrooms_Property.showroom_parser import get_showroom_links
 
           showrooms = get_showroom_links()
           total     = len(showrooms)
@@ -101,7 +101,7 @@ jobs:
           echo "🔄 [property] Showroom ${{ matrix.index }}: ${{ matrix.name }}"
           echo "URL: ${{ matrix.url }}"
           export PYTHONPATH=$PWD
-          python -u Showrooms/property_showroom_main.py "${{ matrix.url }}"
+          python -u Showrooms_Property/showroom_main.py "${{ matrix.url }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

@@ -377,6 +377,7 @@ _FILES_OPTIONAL_SCRAPERS = frozenset({
     "sportswear_equipment",
     "showrooms_cars_for_sale",
     "showrooms_cars_for_rent",
+    "scanners "
 })
 
 # Per-scraper validation overrides when R2 schema does not match actual Excel layout

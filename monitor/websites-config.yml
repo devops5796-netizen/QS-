@@ -4640,7 +4640,7 @@ excel_schema:
     sheets:
       - name: "{child_category or Main}"
         required_columns: *col_property_listing
-        row_count_range: [1, 100]
+        row_count_range: [1, 150]
     min_file_size_kb: 5
 
   - scraper: watercrafts

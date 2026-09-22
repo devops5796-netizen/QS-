@@ -360,6 +360,13 @@ scrapers:
     workflow_file: showrooms_single_category.yml
     r2_path: "{r2_bucket}/qatarsale/showrooms_cars_for_rent"
 
+  - name: showrooms_property
+    url: https://qatarsale.com/ar/showroom-list/cars_for_rent
+    batch: "Property Showrooms"
+    workflow_file: property_showrooms.yml
+    r2_path: "{r2_bucket}/qatarsale/showrooms_property"
+
+
 # ------------------------------------------------------------
 # PIPELINE CHAIN (auto-detected from workflow triggers)
 # Batch Cars For Sale → Jobs → Users → Simple Categories → Sub Categories → 
@@ -376,16 +383,21 @@ pipeline_chain:
     trigger: "on_completion: Jobs"
     triggers_next: "Simple Categories"
   - batch: "Simple Categories"
-    trigger: "on_completion: Users"
-    triggers_next: "Sub Categories"
+    trigger: "workflow_dispatch (triggered by Users)"
+    triggers_next: "null"
+  
+  
   - batch: "Sub Categories"
-    trigger: "on_completion: Simple Categories"
+    trigger: "cron: '0 0 * * *'"
     triggers_next: "Sub Sub Categories"
   - batch: "Sub Sub Categories"
     trigger: "on_completion: Sub Categories"
     triggers_next: "Showrooms"
   - batch: "Showrooms"
-    trigger: "workflow_dispatch (triggered by Sub Sub Categories)"
+    trigger: "on_completion: Sub Sub Categories"
+    triggers_next: "Property Showrooms"
+  - batch: "Property Showrooms"
+    trigger: "workflow_dispatch (triggered by Showrooms)"
     triggers_next: null
 
 # ============================================================

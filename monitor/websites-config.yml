@@ -4394,6 +4394,23 @@ _col_travel_accessories_listing: &col_travel_accessories_listing
   - whatsapps
   - specs_*
 
+_col_showrooms_property_listing: &col_showrooms_property_listing
+  - id	
+  - uri	
+  - product_url	
+  - startDate	
+  - showroomUri	
+  - categoryUri	
+  - isSold	
+  - isExpired	
+  - url	
+  - name	
+  - cover_image	
+  - phones	
+  - whatsapps	
+  - posts_count	
+  - views_count
+
 # ── PER-SCRAPER SCHEMAS ──────────────────────────────────────
 excel_schema:
 
@@ -4863,6 +4880,15 @@ excel_schema:
         row_count_range: [1, 100]
     min_file_size_kb: 5
 
+  - scraper: showrooms_property
+    excel_file_pattern: "{subcategory_slug}.xlsx"
+    sheets:
+      - name: "{child_category or Main}"
+        required_columns: *col_showrooms_property_listing
+        row_count_range: [1, 100]
+    min_file_size_kb: 5
+   
+
 
 # ============================================================
 # ALERT THRESHS — schema validation + historical trend alarms
@@ -4949,6 +4975,7 @@ alert_thresholds:
     sportswear_equipment: 3
     showrooms_cars_for_sale: 3
     showrooms_cars_for_rent: 3
+    showrooms_property: 3
 
   channels:
     webhook:

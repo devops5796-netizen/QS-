@@ -4395,20 +4395,20 @@ _col_travel_accessories_listing: &col_travel_accessories_listing
   - specs_*
 
 _col_showrooms_property_listing: &col_showrooms_property_listing
-  - id	
-  - uri	
-  - product_url	
-  - startDate	
-  - showroomUri	
-  - categoryUri	
-  - isSold	
-  - isExpired	
-  - url	
-  - name	
-  - cover_image	
-  - phones	
-  - whatsapps	
-  - posts_count	
+  - id
+  - uri
+  - product_url
+  - startDate
+  - showroomUri
+  - categoryUri
+  - isSold
+  - isExpired
+  - url
+  - name
+  - cover_image
+  - phones
+  - whatsapps
+  - posts_count
   - views_count
 
 # ── PER-SCRAPER SCHEMAS ──────────────────────────────────────

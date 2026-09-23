@@ -34,50 +34,50 @@ jobs:
           from Common_files.detect_utils import analyze_category_with_products
 
           MULTI_CATEGORIES = {
-                # "heavy_equipments":
-                #     "https://qatarsale.com/ar/products/heavy_equipments?basic_search:StatusFilter=0",
-                # "jewellery":
-                #     "https://qatarsale.com/ar/products/jewellery?basic_search:StatusFilter=0",
-                "property":
-                    "https://qatarsale.com/ar/products/property?basic_search:StatusFilter=0",
-                # "watercrafts":
-                #     "https://qatarsale.com/ar/products/watercrafts?basic_search:StatusFilter=0",
-                # "video_games":
-                #     "https://qatarsale.com/ar/products/video_games?basic_search:StatusFilter=0",
-                # "wrist_watches":
-                #     "https://qatarsale.com/ar/products/wrist_watches?basic_search:StatusFilter=0",
-                # "home_security_surveillance_systems":
-                #     "https://qatarsale.com/ar/products/home_security_surveillance_systems?basic_search:StatusFilter=0",
-                # "health_beauty":
-                #     "https://qatarsale.com/ar/products/health_beauty?basic_search:StatusFilter=0",
-                # "toys_games":
-                #     "https://qatarsale.com/ar/products/toys_games?basic_search:StatusFilter=0",
-                # "kids":
-                #     "https://qatarsale.com/ar/products/kids?basic_search:StatusFilter=0",
-                # "shoes_bags":
-                #     "https://qatarsale.com/ar/products/shoes_bags?basic_search:StatusFilter=0",
-                # "arts_crafts_sewing":
-                #     "https://qatarsale.com/ar/products/arts_crafts_sewing?basic_search:StatusFilter=0",
-                # "kitchen_dining_room":
-                #     "https://qatarsale.com/ar/products/kitchen_dining_room?basic_search:StatusFilter=0",
-                # "education":
-                #     "https://qatarsale.com/ar/products/education?basic_search:StatusFilter=0",
-                # "bikes_accessories":
-                #     "https://qatarsale.com/ar/products/bikes_accessories?basic_search:StatusFilter=0",
-                # "clothes":
-                #     "https://qatarsale.com/ar/products/clothes?basic_search:StatusFilter=0",
-                # "camping":
-                #     "https://qatarsale.com/ar/products/camping?basic_search:StatusFilter=0",
-                # "tools_home_improvement":
-                #     "https://qatarsale.com/ar/products/tools_home_improvement?basic_search:StatusFilter=0",
-                # "men_accessories":
-                #     "https://qatarsale.com/ar/products/men_accessories?basic_search:StatusFilter=0",
-                # "musical_instruments":
-                #       "https://qatarsale.com/ar/products/musical_instruments?basic_search:StatusFilter=0",
-                # "travel_accessories":
-                #       "https://qatarsale.com/ar/products/travel_accessories?basic_search:StatusFilter=0",
-                # "special_numbers":
-                #       "https://qatarsale.com/ar/products/special_numbers?basic_search:StatusFilter=0",
+                "heavy_equipments":
+                    "https://qatarsale.com/ar/products/heavy_equipments?basic_search:StatusFilter=0",
+                "jewellery":
+                    "https://qatarsale.com/ar/products/jewellery?basic_search:StatusFilter=0",
+                # "property":
+                #     "https://qatarsale.com/ar/products/property?basic_search:StatusFilter=0",
+                "watercrafts":
+                    "https://qatarsale.com/ar/products/watercrafts?basic_search:StatusFilter=0",
+                "video_games":
+                    "https://qatarsale.com/ar/products/video_games?basic_search:StatusFilter=0",
+                "wrist_watches":
+                    "https://qatarsale.com/ar/products/wrist_watches?basic_search:StatusFilter=0",
+                "home_security_surveillance_systems":
+                    "https://qatarsale.com/ar/products/home_security_surveillance_systems?basic_search:StatusFilter=0",
+                "health_beauty":
+                    "https://qatarsale.com/ar/products/health_beauty?basic_search:StatusFilter=0",
+                "toys_games":
+                    "https://qatarsale.com/ar/products/toys_games?basic_search:StatusFilter=0",
+                "kids":
+                    "https://qatarsale.com/ar/products/kids?basic_search:StatusFilter=0",
+                "shoes_bags":
+                    "https://qatarsale.com/ar/products/shoes_bags?basic_search:StatusFilter=0",
+                "arts_crafts_sewing":
+                    "https://qatarsale.com/ar/products/arts_crafts_sewing?basic_search:StatusFilter=0",
+                "kitchen_dining_room":
+                    "https://qatarsale.com/ar/products/kitchen_dining_room?basic_search:StatusFilter=0",
+                "education":
+                    "https://qatarsale.com/ar/products/education?basic_search:StatusFilter=0",
+                "bikes_accessories":
+                    "https://qatarsale.com/ar/products/bikes_accessories?basic_search:StatusFilter=0",
+                "clothes":
+                    "https://qatarsale.com/ar/products/clothes?basic_search:StatusFilter=0",
+                "camping":
+                    "https://qatarsale.com/ar/products/camping?basic_search:StatusFilter=0",
+                "tools_home_improvement":
+                    "https://qatarsale.com/ar/products/tools_home_improvement?basic_search:StatusFilter=0",
+                "men_accessories":
+                    "https://qatarsale.com/ar/products/men_accessories?basic_search:StatusFilter=0",
+                "musical_instruments":
+                      "https://qatarsale.com/ar/products/musical_instruments?basic_search:StatusFilter=0",
+                "travel_accessories":
+                      "https://qatarsale.com/ar/products/travel_accessories?basic_search:StatusFilter=0",
+                "special_numbers":
+                      "https://qatarsale.com/ar/products/special_numbers?basic_search:StatusFilter=0",
           }
 
           PAGES_PER_JOB = {cat: 20 for cat in MULTI_CATEGORIES}
@@ -178,28 +178,28 @@ jobs:
     strategy:
       matrix:
         category:
-        #   - heavy_equipments
-        #   - jewellery
-          - property
-        #   - watercrafts
-        #   - video_games
-        #   - wrist_watches
-        #   - home_security_surveillance_systems
-        #   - health_beauty
-        #   - toys_games
-        #   - kids
-        #   - shoes_bags
-        #   - arts_crafts_sewing
-        #   - kitchen_dining_room
-        #   - education
-        #   - bikes_accessories
-        #   - clothes
-        #   - camping
-        #   - tools_home_improvement
-        #   - men_accessories
-        #   - musical_instruments
-        #   - travel_accessories
-        #   - special_numbers
+          - heavy_equipments
+          - jewellery
+        #   - property
+          - watercrafts
+          - video_games
+          - wrist_watches
+          - home_security_surveillance_systems
+          - health_beauty
+          - toys_games
+          - kids
+          - shoes_bags
+          - arts_crafts_sewing
+          - kitchen_dining_room
+          - education
+          - bikes_accessories
+          - clothes
+          - camping
+          - tools_home_improvement
+          - men_accessories
+          - musical_instruments
+          - travel_accessories
+          - special_numbers
 
     steps:
       - name: Checkout repo

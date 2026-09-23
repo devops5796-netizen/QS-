@@ -38,8 +38,8 @@ jobs:
                     "https://qatarsale.com/ar/products/heavy_equipments?basic_search:StatusFilter=0",
                 "jewellery":
                     "https://qatarsale.com/ar/products/jewellery?basic_search:StatusFilter=0",
-                # "property":
-                #     "https://qatarsale.com/ar/products/property?basic_search:StatusFilter=0",
+                "property":
+                    "https://qatarsale.com/ar/products/property?basic_search:StatusFilter=0",
                 "watercrafts":
                     "https://qatarsale.com/ar/products/watercrafts?basic_search:StatusFilter=0",
                 "video_games":
@@ -180,7 +180,7 @@ jobs:
         category:
           - heavy_equipments
           - jewellery
-        #   - property
+          - property
           - watercrafts
           - video_games
           - wrist_watches

@@ -270,9 +270,20 @@ jobs:
               print(f"No Excel files found for {category} -- nothing scraped for yesterday, skipping all uploads.")
               exit(0)
 
+          import re
+
+          def strip_page_range(fname: str) -> str:
+              # main.py names each matrix job's file with its page range
+              # (e.g. "property_for_sale_1_20_property.xlsx") so that
+              # download-artifact's merge-multiple doesn't overwrite one
+              # job's output with another's. Strip that "_<start>_<end>"
+              # chunk here so every page-range part of the same split
+              # groups -- and merges -- under one final filename.
+              return re.sub(r'_\d+_\d+', '', fname)
+
           by_filename: dict[str, dict[str, pd.DataFrame]] = {}
           for f in files:
-              fname = os.path.basename(f)
+              fname = strip_page_range(os.path.basename(f))
               xl = pd.ExcelFile(f)
               sheets = by_filename.setdefault(fname, {})
               for sheet in xl.sheet_names:
